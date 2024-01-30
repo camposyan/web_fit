@@ -53,6 +53,10 @@ export function ListItem({ user, editAction, activeAction }: ListItemProps) {
                          type={user.ACTIVE ? "unblock" : 'block'}
                          onClick={activeAction}
                     />
+                    <ListIconButton
+                         type={"training"}
+                         onClick={activeAction}
+                    />
                </Flex>
           </Flex>
      )

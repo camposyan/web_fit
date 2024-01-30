@@ -2,7 +2,7 @@ import { Route, createBrowserRouter, createRoutesFromElements } from "react-rout
 import { Login } from "./pages/Login";
 import { DefaultLayout } from "./layout/DefaultLayout";
 import { Profile } from "./pages/Profile";
-import { Dashboard } from "./pages/Dashboard";
+import { Home } from "./pages/Home";
 import { Users } from "./pages/Users";
 import { Exercises } from "./pages/Exercises";
 
@@ -11,7 +11,7 @@ export const Router = createBrowserRouter(
           <>
                <Route path="/" element={<Login />} />
                <Route path="/" element={<DefaultLayout />}>
-                    <Route path="dashboard" element={<Dashboard />} />
+                    <Route path="dashboard" element={<Home />} />
                     <Route path="profile" element={<Profile />} />
                     <Route path="users" element={<Users />} />
                     <Route path="exercises" element={<Exercises />} />

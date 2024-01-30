@@ -1,9 +1,9 @@
 import { IconButton as Chakra_IconButton } from "@chakra-ui/react";
 import { colors } from "../constants/colors";
-import { Lock, LockOpen, Pencil, Trash } from "@phosphor-icons/react";
+import { Barbell, Lock, LockOpen, Pencil, Trash } from "@phosphor-icons/react";
 
 interface ListIconButtonProps {
-     type: 'edit' | 'delete' | 'block' | 'unblock' | 'visualize'
+     type: 'edit' | 'delete' | 'block' | 'unblock' | 'visualize' | 'training'
      isLoading?: boolean
      onClick: () => void
 }
@@ -29,6 +29,11 @@ export function ListIconButton({ type, isLoading, onClick }: ListIconButtonProps
                type: 'unblock',
                backgroundColor: colors.unblockButtonBackgroundColor,
                icon: <LockOpen />
+          },
+          {
+               type: 'training',
+               backgroundColor: colors.trainingButtonBackgroundColor,
+               icon: <Barbell />
           },
      ];
 

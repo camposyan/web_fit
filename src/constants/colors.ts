@@ -12,6 +12,7 @@ export const colors = {
      blockButtonBackgroundColor: '#DC0430',
      unblockButtonBackgroundColor: '#059931',
      visualizeButtonBackgroundColor: '#059931',
+     trainingButtonBackgroundColor: '#059931',
 
      listItemBackgroundColor: '#666',
 }
