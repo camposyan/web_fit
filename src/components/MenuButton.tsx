@@ -3,7 +3,7 @@ import { MenuOptionsType } from "../types/menuOptions";
 import { Button, Text } from "@chakra-ui/react";
 import { colors } from "../constants/colors";
 
-export function MenuButton({ icon, text, link }: MenuOptionsType) {
+export function MenuButton({ icon, text, link, closeSidebarAction }: MenuOptionsType) {
      const path = useLocation().pathname;
 
      return (
@@ -20,6 +20,7 @@ export function MenuButton({ icon, text, link }: MenuOptionsType) {
                _hover={{ backgroundColor: colors.primaryColorHover }}
                gap={'1rem'}
                to={link}
+               onClick={closeSidebarAction}
           >
                {icon}
                <Text fontSize={'xl'}>{text}</Text>

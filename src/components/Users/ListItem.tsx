@@ -18,6 +18,7 @@ export function ListItem({ user, editAction, activeAction }: ListItemProps) {
                backgroundColor={colors.listItemBackgroundColor}
                gap={'1rem'}
                borderRadius={'10px'}
+               direction={{base: 'column', sm: 'column', md: 'row'}}
           >
                <Flex
                     flex={1}
@@ -39,11 +40,11 @@ export function ListItem({ user, editAction, activeAction }: ListItemProps) {
                               <WhatsappLogo size={20} color={'#25D366'} weight="fill" />
                          }
                     </Text>
-                    {/* <Text fontSize='lg'>(lg) In love with React & Next</Text> */}
                </Flex>
                <Flex
                     gap={'0.3rem'}
                     alignItems={'center'}
+                    justifyContent={'center'}
                >
                     <ListIconButton
                          type={"edit"}

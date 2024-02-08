@@ -24,6 +24,7 @@ export function MobileSidebarMenu({ isOpen, onClose, menuOptions }: MobileSideba
                                    menuOptions.map((option, index) => {
                                         return (
                                              <MenuButton
+                                                  closeSidebarAction={onClose}
                                                   icon={option.icon}
                                                   text={option.text}
                                                   link={option.link}

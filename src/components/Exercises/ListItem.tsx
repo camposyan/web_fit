@@ -17,6 +17,7 @@ export function ListItem({ exercise, editAction, deleteAction }: ListItemProps) 
                backgroundColor={colors.listItemBackgroundColor}
                gap={'1rem'}
                borderRadius={'10px'}
+               direction={{ base: 'column', sm: 'column', md: 'row' }}
           >
                <Flex
                     flex={1}
@@ -26,7 +27,11 @@ export function ListItem({ exercise, editAction, deleteAction }: ListItemProps) 
                     <Text fontSize='lg' color={colors.basicTextColor}>{exercise?.name}</Text>
                     <Tag width={'fit-content'}>{exercise.category}</Tag>
                </Flex>
-               <Flex gap={'0.3rem'}>
+               <Flex
+                    gap={'0.3rem'}
+                    justifyContent={'center'}
+                    alignItems={'center'}
+               >
                     <ListIconButton
                          type={"edit"}
                          onClick={editAction}

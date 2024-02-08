@@ -1,4 +1,4 @@
-import { Box, Flex } from "@chakra-ui/react";
+import { Flex } from "@chakra-ui/react";
 import { Outlet } from "react-router-dom";
 import { colors } from "../constants/colors";
 import { SidebarMenu } from "../components/SidebarMenu";

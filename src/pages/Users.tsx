@@ -11,6 +11,7 @@ import { Modal } from "../components/Modal";
 import { axiosClient, getAxiosConfig } from "../services/axiosClient";
 import { useUtils } from "../hooks/useUtils";
 import { Checkbox } from "../components/Checkbox";
+import { mockUserRoutes } from "../mocks/users/mock_users";
 
 export function Users() {
      const toast = useToast();
@@ -40,7 +41,7 @@ export function Users() {
 
      const [editingId, setEditingId] = useState<number | null>(null);
 
-     const [invalidatedInputs, setInvalidatedInputs] = useState<string[]>(['']);
+     const [invalidatedInputs, setInvalidatedInputs] = useState<string[]>([]);
 
      const [seePassword, setSeePassword] = useState<boolean>(false);
 
@@ -89,14 +90,21 @@ export function Users() {
 
      const resetStates = () => {
           setUserName('');
-          // setUserDocument('');
+          setName('');
+          setEmail('');
+          setPassword('');
+          setCellphone('');
+          setIsWppCell(false);
+
+          setInvalidatedInputs([]);
      }
 
      const getAllUsers = async () => { //TODO: colocar rota
           setIsLoading(true);
 
-          await axiosClient.get('/user/', getAxiosConfig())
+          await axiosClient.get('http://localhost:5173/api/users', getAxiosConfig())
                .then((response) => {
+                    console.log(response);
                     setAllUsers(response.data);
                })
                .catch((error) => {
@@ -234,6 +242,8 @@ export function Users() {
      }
 
      useEffect(() => {
+          mockUserRoutes();
+
           getAllUsers();
           setAllUsers(userArray);
      }, [])

@@ -2,8 +2,7 @@ export interface MenuOptionsType {
      text: string,
      icon?: JSX.Element,
      link?: string,
-     onClick?: () => void,
-     type: 'admin' | 'user' | 'all'
+     closeSidebarAction?: () => void
 }
 
 export interface MobileMenuOptionsType {

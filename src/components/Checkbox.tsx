@@ -1,4 +1,4 @@
-import { FormControl, FormLabel, Checkbox as Chakra_Checkbox, Box, Flex } from "@chakra-ui/react";
+import { FormControl, FormLabel, Checkbox as Chakra_Checkbox } from "@chakra-ui/react";
 import { colors } from "../constants/colors";
 import { ChangeEvent } from "react";
 

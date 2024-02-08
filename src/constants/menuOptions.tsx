@@ -1,47 +1,43 @@
-import { Barbell, Calendar, House, User, UserCircle, UserCircleGear } from "@phosphor-icons/react"
+import { Article, Barbell, Calendar, House, UserCircle, UserCircleGear } from "@phosphor-icons/react"
 import { MenuOptionsType, MobileMenuOptionsType } from "../types/menuOptions";
 
 export const menuOptions: MenuOptionsType[] = [
      {
           icon: <House size={30} />,
           text: 'Início',
-          link: '/dashboard',
-          type: 'all'
+          link: '/home',
      },
      {
           icon: <UserCircle size={30} />,
           text: 'Usuários',
           link: '/users',
-          type: 'admin'
      },
      {
           icon: <Barbell size={30} />,
-          text: 'Treinos',
+          text: 'Exercícios',
           link: '/exercises',
-          type: 'admin'
      },
      {
-          icon: <UserCircleGear size={30} />,
-          text: 'Perfil',
-          link: '/profile',
-          type: 'user'
+          icon: <Article size={30} />,
+          text: 'Fichas',
+          link: '/sheets',
      },
 ];
 
 export const mobileMenuOptions: MobileMenuOptionsType[] = [
      {
           icon: <House size={30} />,
-          link: '/dashboard',
+          link: '/home',
           type: 'all'
      },
      {
-          icon: <UserCircleGear size={30} />,
-          link: '/profile',
-          type: 'user'
+          icon: <UserCircle size={30} />,
+          link: '/users',
+          type: 'admin'
      },
      {
-          icon: <Calendar size={30} />,
-          link: '/calendar',
-          type: 'user'
+          icon: <Barbell size={30} />,
+          link: '/exercises',
+          type: 'admin'
      },
 ];

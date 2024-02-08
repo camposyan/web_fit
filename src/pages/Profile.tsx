@@ -113,22 +113,22 @@ export function Profile() {
      }
 
      const handleStoreOrUpdateButtonClick = () => {
-          // const data = {
-          //      name: exerciseName,
-          //      category: exerciseCategory
-          // }
+          const data = {
+               // name: exerciseName,
+               // category: exerciseCategory
+          }
 
-          // const validation = inputsValidation([
-          //      { name: 'exercise-name', value: exerciseName },
-          //      { name: 'exercise-category', value: exerciseCategory },
-          // ]);
+          const validation = inputsValidation([
+               // { name: 'exercise-name', value: exerciseName },
+               // { name: 'exercise-category', value: exerciseCategory },
+          ]);
 
-          // if (validation.isValidated) {
-          //      // isEditing ? updateUser() : storeUser();
-          //      console.log(data);
-          // } else {
-          //      setInvalidatedInputs(validation.invalidatedInputs)
-          // }
+          if (validation.isValidated) {
+               // isEditing ? updateUser() : storeUser();
+               console.log(data);
+          } else {
+               setInvalidatedInputs(validation.invalidatedInputs)
+          }
      }
 
      const handleChangeUserFrontImage = (e: ChangeEvent<HTMLInputElement>) => {
@@ -178,7 +178,7 @@ export function Profile() {
                                    value={weight}
                                    onChange={(e) => setWeight(e.target.value)}
                                    isRequired
-                                   isInvalid={invalidatedInputs?.find(input => input === 'weight') === 'weight'}
+                                   invalidInputsArray={invalidatedInputs}
                               />
                          </GridItem>
                          <GridItem colSpan={{ base: 8, sm: 5, md: 3, lg: 3 }}>
@@ -191,7 +191,7 @@ export function Profile() {
                                    value={height}
                                    onChange={(e) => setHeight(e.target.value)}
                                    isRequired
-                                   isInvalid={invalidatedInputs?.find(input => input === 'height') === 'height'}
+                                   invalidInputsArray={invalidatedInputs}
                               />
                          </GridItem>
                          <GridItem colSpan={{ base: 8, sm: 6, md: 4, lg: 1 }}>
@@ -203,7 +203,7 @@ export function Profile() {
                                    value={actualDate}
                                    onChange={(e) => setActualDate(e.target.value)}
                                    isRequired
-                                   isInvalid={invalidatedInputs?.find(input => input === 'actual-date') === 'actual-date'}
+                                   invalidInputsArray={invalidatedInputs}
                               />
                          </GridItem>
                     </Grid>
