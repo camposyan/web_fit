@@ -23,13 +23,9 @@ export function Users() {
      const [allUsers, setAllUsers] = useState<UsersListType[]>([]);
 
      const [name, setName] = useState<string>('');
-     const [userName, setUserName] = useState<string>('');
      const [email, setEmail] = useState<string>('');
      const [cellphone, setCellphone] = useState<string>('');
      const [isWppCell, setIsWppCell] = useState<boolean>(false);
-     const [isActive, setIsActive] = useState<string>('');
-     const [password, setPassword] = useState<string>('');
-     // const [userDocument, setUserDocument] = useState<string>('');
 
      const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
 
@@ -43,60 +39,15 @@ export function Users() {
 
      const [invalidatedInputs, setInvalidatedInputs] = useState<string[]>([]);
 
-     const [seePassword, setSeePassword] = useState<boolean>(false);
-
-     const userArray: UsersListType[] = [
-          {
-               ID: 1,
-               NAME: 'Yan Campos',
-               EMAIL: 'camposyan00@gmail.com',
-               CELLPHONE: '(32)98884-3542',
-               IS_WPP_CELL: true,
-               ACTIVE: true,
-          },
-          {
-               ID: 1,
-               NAME: 'Gabriel Azevedo',
-               EMAIL: 'camposyan00@gmail.com',
-               CELLPHONE: '(32)98884-3542',
-               IS_WPP_CELL: false,
-               ACTIVE: false,
-          },
-          {
-               ID: 1,
-               NAME: 'Nikolas Calixto',
-               EMAIL: 'camposyan00@gmail.com',
-               CELLPHONE: '(32)98884-3542',
-               IS_WPP_CELL: false,
-               ACTIVE: true,
-          },
-          {
-               ID: 1,
-               NAME: 'Thiago Netto',
-               EMAIL: 'camposyan00@gmail.com',
-               CELLPHONE: '(32)98884-3542',
-               IS_WPP_CELL: true,
-               ACTIVE: false,
-          },
-          {
-               ID: 1,
-               NAME: 'Júlia Monteiro',
-               EMAIL: 'camposyan00@gmail.com',
-               CELLPHONE: '(32)98884-3542',
-               IS_WPP_CELL: true,
-               ACTIVE: true,
-          },
-     ]
-
      const resetStates = () => {
-          setUserName('');
           setName('');
           setEmail('');
-          setPassword('');
           setCellphone('');
           setIsWppCell(false);
 
           setInvalidatedInputs([]);
+          setEditingId(null);
+          setIsEditing(false);
      }
 
      const getAllUsers = async () => { //TODO: colocar rota
@@ -104,7 +55,6 @@ export function Users() {
 
           await axiosClient.get('http://localhost:5173/api/users', getAxiosConfig())
                .then((response) => {
-                    console.log(response);
                     setAllUsers(response.data);
                })
                .catch((error) => {
@@ -119,12 +69,17 @@ export function Users() {
                });
      }
 
-     const getUser = async () => { //TODO: colocar rota
+     const getUser = async (userId: number) => { //TODO: colocar rota
           setIsModalLoading(true);
 
-          await axiosClient.get(`/${editingId}`, getAxiosConfig())
+          await axiosClient.get(`http://localhost:5173/api/users/${userId}`, getAxiosConfig())
                .then((response) => {
-                    // setAllUsers(response.data);
+                    const user: UsersType = response.data;
+
+                    setName(user.NAME);
+                    setEmail(user.EMAIL);
+                    setCellphone(user.CELLPHONE);
+                    setIsWppCell(user.IS_WPP_CELL);
                })
                .catch((error) => {
                     toast({
@@ -141,8 +96,8 @@ export function Users() {
      const storeUser = async (data: UsersType) => { //TODO: colocar rota
           setIsModalButtonLoading(true);
 
-          await axiosClient.post('/user', data)
-               .then(async (response) => {
+          await axiosClient.post('http://localhost:5173/api/user', data)
+               .then(async () => {
                     toast({
                          title: 'Sucesso!',
                          description: 'Usuário cadastrado!',
@@ -150,6 +105,7 @@ export function Users() {
                     });
 
                     resetStates();
+                    setIsModalOpen(false);
 
                     await getAllUsers();
                })
@@ -168,8 +124,8 @@ export function Users() {
      const updateUser = async (data: UsersType) => { //TODO: colocar rota
           setIsModalButtonLoading(true);
 
-          await axiosClient.post(`/${editingId}`, data, getAxiosConfig())
-               .then(async (response) => {
+          await axiosClient.put(`http://localhost:5173/api/user/${editingId}`, data, getAxiosConfig())
+               .then(async () => {
                     toast({
                          title: 'Sucesso!',
                          description: 'Usuário cadastrado!',
@@ -177,6 +133,7 @@ export function Users() {
                     });
 
                     resetStates();
+                    setIsModalOpen(false);
 
                     await getAllUsers();
                })
@@ -192,6 +149,39 @@ export function Users() {
                });
      }
 
+     const toggleActiveUser = async (userId: number) => {
+          await axiosClient.get(`http://localhost:5173/api/users/${userId}`, getAxiosConfig())
+               .then(async (response) => {
+                    const user: UsersType = response.data;
+                    const data: UsersType = {
+                         NAME: user.NAME,
+                         EMAIL: user.EMAIL,
+                         CELLPHONE: user.CELLPHONE, 
+                         IS_WPP_CELL: user.IS_WPP_CELL,
+                         ACTIVE: !user.ACTIVE, 
+                         PERSONAL_ID: 1
+                    }
+
+                    await axiosClient.put(`http://localhost:5173/api/user/${userId}`, data, getAxiosConfig())
+                         .then(async () => {
+                              toast({
+                                   title: 'Sucesso!',
+                                   description: 'Status alterado!',
+                                   status: 'success'
+                              });
+
+                              await getAllUsers();
+                         })
+                         .catch((error) => {
+                              toast({
+                                   title: 'Erro!',
+                                   description: `Erro ao alterar o status do usuário. Cód: ${error.response?.data.status}.`,
+                                   status: 'error'
+                              });
+                         })
+               })
+     }
+
      const handleClickAddNewButton = () => {
           setIsModalOpen(true);
      }
@@ -202,18 +192,16 @@ export function Users() {
 
           setIsModalOpen(true);
 
-          await getUser();
+          await getUser(userId);
      }
 
-     const handleActiveButtonClick = (userId: number) => {
-
+     const handleActiveButtonClick = async (userId: number) => {
+          await toggleActiveUser(userId);
      }
 
      const handleStoreOrUpdateButtonClick = () => {
           const data: UsersType = {
-               USERNAME: userName,
                NAME: name,
-               PASSWORD: password,
                EMAIL: email,
                CELLPHONE: cellphone,
                IS_WPP_CELL: isWppCell,
@@ -223,29 +211,27 @@ export function Users() {
 
           const validation = inputsValidation([
                { name: 'name', value: name },
-               { name: 'username', value: userName },
-               { name: 'password', value: password },
                { name: 'email', value: email },
                { name: 'cellphone', value: cellphone },
           ]);
 
           if (validation.isValidated) {
                isEditing ? updateUser(data) : storeUser(data);
-               console.log(data);
           } else {
                setInvalidatedInputs(validation.invalidatedInputs)
           }
      }
 
      const handleSearchButtonClick = () => {
-          
+          const searchedUsers = allUsers.find(user => user.NAME.toLowerCase() === searchName.toLowerCase())
+
+          console.log(searchedUsers);
      }
 
      useEffect(() => {
           mockUserRoutes();
 
           getAllUsers();
-          setAllUsers(userArray);
      }, [])
 
      return (
@@ -324,7 +310,7 @@ export function Users() {
                <Modal
                     isOpen={isModalOpen}
                     onClose={() => (setIsModalOpen(false), resetStates())}
-                    title={isEditing ? "Editar usuário" : "Cadastrar usuário"}
+                    title={isEditing ? 'Editar usuário' : "Cadastrar usuário"}
                     size={"4xl"}
                     isEditing={isEditing}
                     isLoading={isModalLoading}
@@ -335,20 +321,7 @@ export function Users() {
                          templateColumns={'repeat(15, 1fr)'}
                          gap={'1rem'}
                     >
-                         <GridItem colSpan={{ base: 15, md: 3, lg: 3 }}>
-                              <Input
-                                   id={"username"}
-                                   label={"Usuário"}
-                                   type={"text"}
-                                   width={{ base: '100%' }}
-                                   value={userName}
-                                   onChange={(e) => setUserName(e.target.value)}
-                                   isDisabled={isModalButtonLoading}
-                                   isRequired
-                                   invalidInputsArray={invalidatedInputs}
-                              />
-                         </GridItem>
-                         <GridItem colSpan={{ base: 15, md: 9, lg: 9 }}>
+                         <GridItem colSpan={{ base: 15 }}>
                               <Input
                                    id={"name"}
                                    label={"Nome"}
@@ -356,23 +329,6 @@ export function Users() {
                                    width={{ base: '100%' }}
                                    value={name}
                                    onChange={(e) => setName(e.target.value)}
-                                   isDisabled={isModalButtonLoading}
-                                   isRequired
-                                   invalidInputsArray={invalidatedInputs}
-                              />
-                         </GridItem>
-                         <GridItem colSpan={{ base: 15, md: 3, lg: 3 }}>
-                              <Input
-                                   id={"password"}
-                                   label={"Senha"}
-                                   type={seePassword ? "text" : "password"}
-                                   width={{ base: '100%' }}
-                                   value={password}
-                                   onChange={(e) => setPassword(e.target.value)}
-                                   inputButton={{
-                                        icon: seePassword ? <EyeSlash size={25} /> : <Eye size={25} />,
-                                        action: () => setSeePassword(!seePassword)
-                                   }}
                                    isDisabled={isModalButtonLoading}
                                    isRequired
                                    invalidInputsArray={invalidatedInputs}
@@ -410,7 +366,7 @@ export function Users() {
                                    id={"wpp"}
                                    label={"Whatsapp?"}
                                    optionText={"Sim"}
-                                   value={isWppCell}
+                                   isChecked={isWppCell}
                                    onChange={(e) => setIsWppCell(e.target.checked)}
                               />
                          </GridItem>

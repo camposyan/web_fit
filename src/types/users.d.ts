@@ -1,7 +1,5 @@
 export interface UsersType {
-     USERNAME: string,
      NAME: string,
-     PASSWORD: string,
      EMAIL: string,
      CELLPHONE: string,
      IS_WPP_CELL: boolean,

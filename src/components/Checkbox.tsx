@@ -4,7 +4,7 @@ import { ChangeEvent } from "react";
 
 interface CheckboxProps {
      id: string,
-     value: boolean,
+     isChecked: boolean,
      onChange: (e: ChangeEvent<HTMLInputElement>) => void,
      label?: string,
      optionText: string
@@ -13,9 +13,9 @@ interface CheckboxProps {
      invalidInputsArray?: string[],
 }
 
-export function Checkbox({ id, value, onChange, label, optionText, isRequired, isDisabled, invalidInputsArray }: CheckboxProps) {
+export function Checkbox({ id, isChecked, onChange, label, optionText, isRequired, isDisabled, invalidInputsArray }: CheckboxProps) {
      const isInvalid = invalidInputsArray?.find(input => input === id) === id;
-
+     
      return (
           <FormControl
                isRequired={isRequired}
@@ -27,16 +27,16 @@ export function Checkbox({ id, value, onChange, label, optionText, isRequired, i
                     fontSize={'xl'}
                     fontWeight={'normal'}
                     color={colors.basicTextColor}
-                    >
+               >
                     {label}
                </FormLabel>
                <Chakra_Checkbox
-                    value={Number(value)}
                     onChange={onChange}
                     isDisabled={isDisabled}
                     marginTop={'0.75rem'}
                     color={colors.basicTextColor}
                     colorScheme={'green'}
+                    isChecked={isChecked}
                >
                     {optionText}
                </Chakra_Checkbox>
