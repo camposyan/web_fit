@@ -1,4 +1,4 @@
-import { Article, Barbell, Calendar, House, UserCircle, UserCircleGear } from "@phosphor-icons/react"
+import { Article, Barbell, House, UserCircle } from "@phosphor-icons/react"
 import { MenuOptionsType, MobileMenuOptionsType } from "../types/menuOptions";
 
 export const menuOptions: MenuOptionsType[] = [

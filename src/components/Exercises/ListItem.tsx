@@ -1,4 +1,4 @@
-import { Box, Flex, Tag, Text } from "@chakra-ui/react";
+import { Flex, Tag, Text } from "@chakra-ui/react";
 import { ListIconButton } from "../ListIconButton";
 import { colors } from "../../constants/colors";
 import { ExercisesType } from "../../types/exercises";

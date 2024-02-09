@@ -28,7 +28,6 @@ export function MobileSidebarMenu({ isOpen, onClose, menuOptions }: MobileSideba
                                                   icon={option.icon}
                                                   text={option.text}
                                                   link={option.link}
-                                                  type={option.type}
                                                   key={index}
                                              />
                                         )

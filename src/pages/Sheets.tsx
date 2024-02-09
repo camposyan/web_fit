@@ -4,7 +4,7 @@ import { Container } from "../components/Container";
 export function Sheets() {
      const [isLoading, setIsLoading] = useState<boolean>(false);
 
-     // setIsLoading(false)
+     setIsLoading(false)
      return (
           <Container
                title={"Fichas"}

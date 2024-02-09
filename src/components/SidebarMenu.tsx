@@ -59,7 +59,6 @@ export function SidebarMenu({ menuOptions }: SidebarMenuProps) {
                                         icon={option.icon}
                                         text={option.text}
                                         link={option.link}
-                                        type={option.type}
                                         key={index}
                                    />
                               )
@@ -69,7 +68,6 @@ export function SidebarMenu({ menuOptions }: SidebarMenuProps) {
                <MenuButton
                     icon={<SignOut size={30} />}
                     text={'Sair'}
-                    type={'all'}
                     link={'/'}
                />
           </Box>
