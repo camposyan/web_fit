@@ -53,8 +53,8 @@ export function Login() {
           if (validation.isValidated) {
                setIsLoading(true);
 
-               await login(userEmail, userPassword);
-               // navigate("/dashboard");
+               // await login(userEmail, userPassword);
+               navigate("/home");
           } else {
                setInvalidatedInputs(validation.invalidatedInputs)
           }
