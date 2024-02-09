@@ -20,42 +20,12 @@ export const mockLoginRoutes = () => {
                this.namespace = '/api'
                this.urlPrefix = 'http://localhost:5173'
 
-               // this.get("/users",
-               //      (schema) => {
-               //           return schema.db.users
-               //      },
-               // )
-
-               // this.get('/users/:id',
-               //      (schema, request) => {
-               //           const id = request.params.id;
-               //           return schema.db.users.find(id);
-               //      },
-               // )
-
-
                this.post("/login",
                     (schema, request) => {
                          const data = JSON.parse(request.requestBody);
                          return schema.db.users.find(data.id);
                     },
                )
-
-               // this.put("/user/:id",
-               //      (schema, request) => {
-               //           const id = request.params.id;
-               //           const data = JSON.parse(request.requestBody);
-               //           return schema.db.users.update(id, data);
-               //      },
-               // )
-
-               // this.delete("/user/:id",
-               //      (schema, request) => {
-               //           const id = request.params.id
-               //           schema.db.users.remove(id)
-               //           return {message: 'Deleted'}
-               //      },
-               // )
           },
 
 
