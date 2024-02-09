@@ -1,9 +1,9 @@
 import { Flex, Grid, GridItem, useToast } from "@chakra-ui/react";
 import { Container } from "../components/Container";
 import { Input } from "../components/Input";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { IconButton } from "../components/IconButton";
-import { Eye, EyeSlash, MagnifyingGlass, Plus } from "@phosphor-icons/react";
+import { MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { Button } from "../components/Button";
 import { UsersListType, UsersType } from "../types/users";
 import { ListItem } from "../components/Users/ListItem";
@@ -11,7 +11,7 @@ import { Modal } from "../components/Modal";
 import { axiosClient, getAxiosConfig } from "../services/axiosClient";
 import { useUtils } from "../hooks/useUtils";
 import { Checkbox } from "../components/Checkbox";
-import { mockUserRoutes } from "../mocks/users/mock_users";
+import { mockUserRoutes } from "../mocks/mock_users";
 
 export function Users() {
      const toast = useToast();

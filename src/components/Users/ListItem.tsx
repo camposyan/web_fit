@@ -18,7 +18,7 @@ export function ListItem({ user, editAction, activeAction }: ListItemProps) {
                backgroundColor={colors.listItemBackgroundColor}
                gap={'1rem'}
                borderRadius={'10px'}
-               direction={{base: 'column', sm: 'column', md: 'row'}}
+               direction={{ base: 'column', sm: 'column', md: 'row' }}
           >
                <Flex
                     flex={1}
@@ -47,14 +47,17 @@ export function ListItem({ user, editAction, activeAction }: ListItemProps) {
                     justifyContent={'center'}
                >
                     <ListIconButton
+                         title={"Editar"}
                          type={"edit"}
                          onClick={editAction}
                     />
                     <ListIconButton
+                         title={user.ACTIVE ? "Bloquear" : 'Liberar'}
                          type={user.ACTIVE ? "unblock" : 'block'}
                          onClick={activeAction}
                     />
                     <ListIconButton
+                         title={"Treinos"}
                          type={"training"}
                          onClick={activeAction}
                     />

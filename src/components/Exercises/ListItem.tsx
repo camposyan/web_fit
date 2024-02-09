@@ -1,4 +1,4 @@
-import { Flex, Tag, Text } from "@chakra-ui/react";
+import { Box, Flex, Tag, Text } from "@chakra-ui/react";
 import { ListIconButton } from "../ListIconButton";
 import { colors } from "../../constants/colors";
 import { ExercisesType } from "../../types/exercises";
@@ -21,11 +21,21 @@ export function ListItem({ exercise, editAction, deleteAction }: ListItemProps) 
           >
                <Flex
                     flex={1}
-                    direction={'column'}
-                    justifyContent={'center'}
+                    alignItems={'center'}
                >
-                    <Text fontSize='lg' color={colors.basicTextColor}>{exercise?.name}</Text>
-                    <Tag width={'fit-content'}>{exercise.category}</Tag>
+                    <Text
+                         fontSize='lg'
+                         color={colors.basicTextColor}
+                         width={'70%'}
+                    >
+                         {exercise?.name}
+                    </Text>
+                    <Tag
+                         width={'5rem'}
+                         justifyContent={'center'}
+                    >
+                         {exercise.category}
+                    </Tag>
                </Flex>
                <Flex
                     gap={'0.3rem'}
@@ -33,10 +43,12 @@ export function ListItem({ exercise, editAction, deleteAction }: ListItemProps) 
                     alignItems={'center'}
                >
                     <ListIconButton
+                         title={"Editar"}
                          type={"edit"}
                          onClick={editAction}
                     />
                     <ListIconButton
+                         title={"Excluir"}
                          type={"delete"}
                          onClick={deleteAction}
                     />
