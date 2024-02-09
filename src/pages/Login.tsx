@@ -2,12 +2,13 @@ import { Flex, Image, useToast } from "@chakra-ui/react";
 import { colors } from "../constants/colors";
 import logo from '../assets/logo.jpg'
 import { Input } from "../components/Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EyeSlash, Lock, Eye, User } from "@phosphor-icons/react";
 import { Button } from "../components/Button";
-// import { axiosClient } from "../services/axiosClient";
+import { axiosClient } from "../services/axiosClient";
 import { useNavigate } from "react-router-dom";
 import { useUtils } from "../hooks/useUtils";
+import { mockLoginRoutes } from "../mocks/mock_login";
 
 export function Login() {
      const toast = useToast();
@@ -23,30 +24,32 @@ export function Login() {
      const [invalidatedInputs, setInvalidatedInputs] = useState<string[]>([''])
 
      const login = async (email: string, password: string) => {
-          toast({
-               title: 'Erro ao realizar o login!',
-               description: `Um erro inesperado aconteceu. Entre em contato com o suporte. Cód: ${email} ${password}`,
-               status: 'error'
-          })
-          // await axiosClient.post('/user/login', {
-          //      email: email,
-          //      password: password
+          // toast({
+          //      title: 'Erro ao realizar o login!',
+          //      description: `Um erro inesperado aconteceu. Entre em contato com o suporte. Cód: ${email} ${password}`,
+          //      status: 'error'
           // })
-          //      .then((response) => {
-          //           window?.localStorage.setItem('LOGIN-TOKEN', response.data.token);
+          await axiosClient.post('http://localhost:5173/api/login', {
+               id: '2',
+               EMAIL: email,
+               PASSWORD: password
+          })
+               .then(() => {
+                    // window?.localStorage.setItem('LOGIN-TOKEN', response.data.token);
 
-          //           navigate("/pratical_tests");
-          //      })
-          //      .catch((error) => {
-          //           toast({
-          //                title: 'Erro ao realizar o login!',
-          //                description: `Um erro inesperado aconteceu. Entre em contato com o suporte. Cód: ${error.response.data.status}`,
-          //                status: 'error'
-          //           })
-          //      })
-          //      .finally(() => {
-          //           setIsLoading(false);
-          //      })
+                    navigate("/home");
+               })
+               .catch((error) => {
+                    console.log(error);
+                    toast({
+                         title: 'Erro ao realizar o login!',
+                         description: `Um erro inesperado aconteceu. Entre em contato com o suporte. Cód: ${error.response.data.status}`,
+                         status: 'error'
+                    })
+               })
+               .finally(() => {
+                    setIsLoading(false);
+               })
      }
 
      const handleLoginButtonClick = async () => {
@@ -59,11 +62,14 @@ export function Login() {
                setIsLoading(true);
 
                await login(userEmail, userPassword);
-               navigate("/home");
           } else {
                setInvalidatedInputs(validation.invalidatedInputs)
           }
      }
+
+     useEffect(() => {
+          mockLoginRoutes();
+     }, [])
 
      return (
           <Flex
