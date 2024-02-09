@@ -149,7 +149,7 @@ export function Users() {
                });
      }
 
-     const toggleActiveUser = async (userId: number) => {
+     const handleToggleActiveUser = async (userId: number) => {
           await axiosClient.get(`http://localhost:5173/api/users/${userId}`, getAxiosConfig())
                .then(async (response) => {
                     const user: UsersType = response.data;
@@ -196,7 +196,7 @@ export function Users() {
      }
 
      const handleActiveButtonClick = async (userId: number) => {
-          await toggleActiveUser(userId);
+          await handleToggleActiveUser(userId);
      }
 
      const handleStoreOrUpdateButtonClick = () => {

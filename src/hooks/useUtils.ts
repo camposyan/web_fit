@@ -40,30 +40,38 @@ export function useUtils() {
           let toastMessage: string[] = [];
 
           inputs?.map((input, index) => {
-               if (input.value === undefined || input.value === '') {
-                    invalidatedInputs[index] = input.name;
-                    if (toastMessage.length === 0) {
-                         toastMessage.push('Preencha os campos obrigatórios corretamente.');
-                    }
-               } else {
-                    if (input.type === 'email') {
-                         const emailRegex = /\S+@\S+\.\S+/;
-
-                         if (!emailRegex?.test(input.value as string)) {
-                              invalidatedInputs.push(input.name);
-                              toastMessage.push('Preencha o campo com um e-mail em um formato válido.');
-                         } else {
-                              invalidatedInputs.slice(index, 1);
-                         }
-                    } else if (input.type === 'password') {
-                         if ((input.value as string).length < 8) {
-                              invalidatedInputs.push(input.name);
-                              toastMessage.push('O campo de senha deve ter no mínimo 8 caracteres.');
-                         } else {
-                              invalidatedInputs.slice(index, 1);
-                         }
+               if(input.isSelect) {
+                    if(input.value === 'SELECIONE') {
+                         invalidatedInputs.push(input.name);
                     } else {
                          invalidatedInputs.slice(index, 1);
+                    }
+               } else {
+                    if (input.value === undefined || input.value === '') {
+                         invalidatedInputs[index] = input.name;
+                         if (toastMessage.length === 0) {
+                              toastMessage.push('Preencha os campos obrigatórios corretamente.');
+                         }
+                    } else {
+                         if (input.type === 'email') {
+                              const emailRegex = /\S+@\S+\.\S+/;
+     
+                              if (!emailRegex?.test(input.value as string)) {
+                                   invalidatedInputs.push(input.name);
+                                   toastMessage.push('Preencha o campo com um e-mail em um formato válido.');
+                              } else {
+                                   invalidatedInputs.slice(index, 1);
+                              }
+                         } else if (input.type === 'password') {
+                              if ((input.value as string).length < 8) {
+                                   invalidatedInputs.push(input.name);
+                                   toastMessage.push('O campo de senha deve ter no mínimo 8 caracteres.');
+                              } else {
+                                   invalidatedInputs.slice(index, 1);
+                              }
+                         } else {
+                              invalidatedInputs.slice(index, 1);
+                         }
                     }
                }
           })

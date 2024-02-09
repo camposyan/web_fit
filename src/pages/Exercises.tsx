@@ -5,15 +5,16 @@ import { useEffect, useState } from "react";
 import { IconButton } from "../components/IconButton";
 import { MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { Button } from "../components/Button";
-// import { UsersType } from "../types/users";
 import { ListItem } from "../components/Exercises/ListItem";
 import { Modal } from "../components/Modal";
 import { axiosClient, getAxiosConfig } from "../services/axiosClient";
 import { useUtils } from "../hooks/useUtils";
-import { ExercisesType } from "../types/exercises";
+import { ExercisesListType, ExercisesType } from "../types/exercises";
 import { Select } from "../components/Select";
 import { exercisesCategories } from "../constants/exercises";
 import { TextArea } from "../components/TextArea";
+import { mockExerciseRoutes } from "../mocks/mock_exercises";
+import { ConfirmModal } from "../components/ConfirmModal";
 
 export function Exercises() {
      const toast = useToast();
@@ -23,74 +24,67 @@ export function Exercises() {
      const [searchName, setSearchName] = useState<string>('');
      const [searchCategory, setSearchCategory] = useState<string>('SELECIONE');
 
-     // const [allExercises, setAllExercises] = useState<UsersType[]>([]);
+     const [allExercises, setAllExercises] = useState<ExercisesListType[]>([]);
 
      const [name, setName] = useState<string>('');
-     const [category, setCategory] = useState<string>('SELECIONE');
+     const [category, setCategory] = useState<string | number>('SELECIONE');
      const [description, setDescription] = useState<string>('');
-     // const [videoLink, setVideoLink] = useState<string>('');
 
      const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
 
      const [isEditing, setIsEditing] = useState<boolean>(false);
 
      const [isLoading, setIsLoading] = useState<boolean>(false);
      const [isModalLoading, setIsModalLoading] = useState<boolean>(false);
      const [isModalButtonLoading, setIsModalButtonLoading] = useState<boolean>(false);
+     const [isConfirmModalButtonLoading, setIsConfirmModalButtonLoading] = useState<boolean>(false);
 
      const [editingId, setEditingId] = useState<number | null>(null);
+     const [deletingId, setDeletingId] = useState<number | null>(null);
 
      const [invalidatedInputs, setInvalidatedInputs] = useState<string[]>([''])
-
-     const exercisesArray: ExercisesType[] = [
-          {
-               id: 1,
-               name: 'Puxada triângulo',
-               category: 'Costas'
-          },
-          {
-               id: 3,
-               name: 'Supino inclinado',
-               category: 'Peito'
-          },
-          {
-               id: 3,
-               name: 'Rosca martelo',
-               category: 'Bíceps'
-          },
-     ]
 
      const resetStates = () => {
           setName('');
           setCategory('SELECIONE');
+          setDescription('');
+
+          setInvalidatedInputs([]);
+          setEditingId(null);
+          setDeletingId(null);
+          setIsEditing(false);
      }
 
-     // const getAllExercises = async () => { //TODO: colocar rota
-     //      setIsLoading(true);
+     const getAllExercises = async () => { //TODO: colocar rota
+          setIsLoading(true);
 
-     //      await axiosClient.get('/', getAxiosConfig())
-     //           .then((response) => {
-     //                setAllExercises(response.data);
-     //           })
-     //           .catch((error) => {
-     //                toast({
-     //                     title: 'Erro!',
-     //                     description: `Erro ao buscas os exercícios. Cód: ${error.response?.data.status}.`,
-     //                     status: 'error'
-     //                });
-     //           })
-     //           .finally(() => {
-     //                setIsLoading(false);
-     //           });
-     // }
+          await axiosClient.get('http://localhost:5173/api/exercises', getAxiosConfig())
+               .then((response) => {
+                    setAllExercises(response.data);
+               })
+               .catch((error) => {
+                    toast({
+                         title: 'Erro!',
+                         description: `Erro ao buscas os exercícios. Cód: ${error.response?.data.status}.`,
+                         status: 'error'
+                    });
+               })
+               .finally(() => {
+                    setIsLoading(false);
+               });
+     }
 
-     const getExercise = async () => { //TODO: colocar rota
+     const getExercise = async (exerciseId: number) => { //TODO: colocar rota
           setIsModalLoading(true);
 
-          await axiosClient.get(`/${editingId}`, getAxiosConfig())
+          await axiosClient.get(`http://localhost:5173/api/exercise/${exerciseId}`, getAxiosConfig())
                .then((response) => {
-                    console.log(response);
-                    // setAllUsers(response.data);
+                    const exercise: ExercisesType = response.data;
+
+                    setName(exercise.NAME);
+                    setCategory(exercise.CATEGORY_ID);
+                    setDescription(exercise.DESCRIPTION);
                })
                .catch((error) => {
                     toast({
@@ -104,59 +98,89 @@ export function Exercises() {
                });
      }
 
-     // const storeExercise = async (data: ExercisesType) => { //TODO: colocar rota
-     //      setIsModalButtonLoading(true);
+     const storeExercise = async (data: ExercisesType) => { //TODO: colocar rota
+          setIsModalButtonLoading(true);
 
-     //      await axiosClient.post('/', data, getAxiosConfig())
-     //           .then(async (response) => {
-     //                toast({
-     //                     title: 'Sucesso!',
-     //                     description: 'Exercício cadastrado!',
-     //                     status: 'success'
-     //                });
+          await axiosClient.post('http://localhost:5173/api/exercise/', data, getAxiosConfig())
+               .then(async () => {
+                    toast({
+                         title: 'Sucesso!',
+                         description: 'Exercício cadastrado!',
+                         status: 'success'
+                    });
 
-     //                resetStates();
+                    resetStates();
+                    setIsModalOpen(false);
 
-     //                await getAllExercises();
-     //           })
-     //           .catch((error) => {
-     //                toast({
-     //                     title: 'Erro!',
-     //                     description: `Erro ao cadastrar o exercício. Cód: ${error.response?.data.status}.`,
-     //                     status: 'error'
-     //                });
-     //           })
-     //           .finally(() => {
-     //                setIsModalButtonLoading(false);
-     //           });
-     // }
+                    await getAllExercises();
+               })
+               .catch((error) => {
+                    toast({
+                         title: 'Erro!',
+                         description: `Erro ao cadastrar o exercício. Cód: ${error.response?.data.status}.`,
+                         status: 'error'
+                    });
+               })
+               .finally(() => {
+                    setIsModalButtonLoading(false);
+               });
+     }
 
-     // const updateExercise = async (data: ExercisesType) => { //TODO: colocar rota
-     //      setIsModalButtonLoading(true);
+     const updateExercise = async (data: ExercisesType) => { //TODO: colocar rota
+          setIsModalButtonLoading(true);
 
-     //      await axiosClient.post(`/${editingId}`, data, getAxiosConfig())
-     //           .then(async (response) => {
-     //                toast({
-     //                     title: 'Sucesso!',
-     //                     description: 'Exercício editado!',
-     //                     status: 'success'
-     //                });
+          await axiosClient.put(`http://localhost:5173/api/exercise/${editingId}`, data, getAxiosConfig())
+               .then(async () => {
+                    toast({
+                         title: 'Sucesso!',
+                         description: 'Exercício editado!',
+                         status: 'success'
+                    });
 
-     //                resetStates();
+                    resetStates();
+                    setIsModalOpen(false);
 
-     //                await getAllExercises();
-     //           })
-     //           .catch((error) => {
-     //                toast({
-     //                     title: 'Erro!',
-     //                     description: `Erro ao editar o exercício. Cód: ${error.response?.data.status}.`,
-     //                     status: 'error'
-     //                });
-     //           })
-     //           .finally(() => {
-     //                setIsModalButtonLoading(false);
-     //           });
-     // }
+                    await getAllExercises();
+               })
+               .catch((error) => {
+                    toast({
+                         title: 'Erro!',
+                         description: `Erro ao editar o exercício. Cód: ${error.response?.data.status}.`,
+                         status: 'error'
+                    });
+               })
+               .finally(() => {
+                    setIsModalButtonLoading(false);
+               });
+     }
+
+     const deleteExercise = async () => { //TODO: colocar rota
+          setIsConfirmModalButtonLoading(true);
+
+          await axiosClient.delete(`http://localhost:5173/api/exercise/${deletingId}`, getAxiosConfig())
+               .then(async () => {
+                    toast({
+                         title: 'Sucesso!',
+                         description: 'Exercício excluído!',
+                         status: 'success'
+                    });
+
+                    resetStates();
+                    setIsConfirmModalOpen(false);
+
+                    await getAllExercises();
+               })
+               .catch((error) => {
+                    toast({
+                         title: 'Erro!',
+                         description: `Erro ao excluir o exercício. Cód: ${error.response?.data.status}.`,
+                         status: 'error'
+                    });
+               })
+               .finally(() => {
+                    setIsConfirmModalButtonLoading(false);
+               });
+     }
 
      const handleClickAddNewButton = () => {
           setIsModalOpen(true);
@@ -168,36 +192,39 @@ export function Exercises() {
 
           setIsModalOpen(true);
 
-          await getExercise();
+          await getExercise(exerciseId);
      }
 
-     // const handleDeleteButtonClick = (exerciseId: number) => {
+     const handleDeleteButtonClick = (exerciseId: number) => {
+          setDeletingId(exerciseId);
 
-     // }
+          setIsConfirmModalOpen(true);
+     }
 
      const handleStoreOrUpdateButtonClick = () => {
           const data = {
-               name: name,
-               category: category
+               NAME: name,
+               CATEGORY_ID: category as number,
+               DESCRIPTION: description,
           }
 
           const validation = inputsValidation([
-               { name: 'exercise-name', value: name },
-               { name: 'exercise-category', value: category },
+               { name: 'name', value: name },
+               { name: 'category', value: category, isSelect: true },
+               { name: 'description', value: description },
           ]);
 
           if (validation.isValidated) {
-               // isEditing ? updateUser() : storeUser();
-               console.log(data);
+               isEditing ? updateExercise(data) : storeExercise(data);
           } else {
                setInvalidatedInputs(validation.invalidatedInputs)
           }
      }
 
      useEffect(() => {
-          // getAllExercises();
-          setIsLoading(false);
-          setIsModalButtonLoading(false);
+          mockExerciseRoutes();
+
+          getAllExercises();
      }, [])
 
      return (
@@ -228,7 +255,7 @@ export function Exercises() {
                                         gap={'1rem'}
                                         alignItems={'flex-end'}
                                    >
-                                        <GridItem colSpan={{ base: 15, md: 9}}>
+                                        <GridItem colSpan={{ base: 15, md: 9 }}>
                                              <Input
                                                   id={"search-name"}
                                                   type={"text"}
@@ -236,9 +263,9 @@ export function Exercises() {
                                                   width={{ base: '100%' }}
                                                   value={searchName}
                                                   onChange={(e) => setSearchName(e.target.value)}
-                                                  />
+                                             />
                                         </GridItem>
-                                        <GridItem colSpan={{ base: 14, md: 5}}>
+                                        <GridItem colSpan={{ base: 14, md: 5 }}>
                                              <Select
                                                   id={"search-category"}
                                                   label={"Categoria"}
@@ -272,14 +299,13 @@ export function Exercises() {
                               gap={'0.5rem'}
                          >
                               {
-                                   exercisesArray?.map((exercise, index) => {
+                                   allExercises?.map((exercise, index) => {
                                         return (
                                              <ListItem
                                                   exercise={exercise}
                                                   key={index}
-                                                  editAction={() => handleEditButtonClick(exercise.id)}
-                                                  deleteAction={() => ''}
-                                                  // deleteAction={() => handleDeleteButtonClick(exercise.id)}
+                                                  editAction={() => handleEditButtonClick(exercise.ID)}
+                                                  deleteAction={() => handleDeleteButtonClick(exercise.ID)}
                                              />
                                         )
                                    })
@@ -340,6 +366,13 @@ export function Exercises() {
                          </GridItem>
                     </Grid>
                </Modal>
+               <ConfirmModal
+                    message={"Deseja excluir esse exercício ?"}
+                    isOpen={isConfirmModalOpen}
+                    onClose={() => setIsConfirmModalOpen(false)}
+                    isButtonLoading={isConfirmModalButtonLoading}
+                    action={deleteExercise}
+               />
           </>
      )
 }

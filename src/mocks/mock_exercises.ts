@@ -10,55 +10,30 @@ export const mockExerciseRoutes = () => {
                     {
                          id: '1',
                          ID: 1,
-                         NAME: 'Yan Campos',
-                         EMAIL: 'camposyan00@gmail.com',
-                         CELLPHONE: '(32)98884-3542',
-                         IS_WPP_CELL: true,
-                         ACTIVE: true,
+                         NAME: 'PUXADA ALTA',
+                         CATEGORY: 'COSTAS',
+                         CATEGORY_ID: 0,
+                         DESCRIPTION: 'Puxar a barra até a altura do peito e voltar.'
                     }
-               );
-               server.create('exercise',
+                    );
+                    server.create('exercise',
                     {
                          id: '2',
                          ID: 2,
-                         NAME: 'Gabriel Azevedo',
-                         EMAIL: 'gabrielazevedo@gmail.com',
-                         CELLPHONE: '(32)99950-2026',
-                         IS_WPP_CELL: true,
-                         ACTIVE: false,
+                         NAME: 'SUPINO INCLINADO',
+                         CATEGORY: 'PEITO',
+                         CATEGORY_ID: 4,
+                         DESCRIPTION: 'Descer a barra até o peito e voltar.'
                     }
-               );
-               server.create('exercise',
+                    );
+                    server.create('exercise',
                     {
                          id: '3',
                          ID: 3,
-                         NAME: 'Nikolas Calixto',
-                         EMAIL: 'nikolascalixto@gmail.com',
-                         CELLPHONE: '(32)99917-9337',
-                         IS_WPP_CELL: false,
-                         ACTIVE: true,
-                    }
-               );
-               server.create('exercise',
-                    {
-                         id: '4',
-                         ID: 4,
-                         NAME: 'Thiago Netto',
-                         EMAIL: 'thiagonetto@gmail.com',
-                         CELLPHONE: '(32)98703-4137',
-                         IS_WPP_CELL: true,
-                         ACTIVE: false,
-                    }
-               );
-               server.create('exercise',
-                    {
-                         id: '5',
-                         ID: 5,
-                         NAME: 'Júlia Monteiro',
-                         EMAIL: 'juliamonteiro@gmail.com',
-                         CELLPHONE: '(32)99185-5761',
-                         IS_WPP_CELL: true,
-                         ACTIVE: true,
+                         NAME: 'ROSCA MARTELO',
+                         CATEGORY: 'BÍCEPS',
+                         CATEGORY_ID: 2,
+                         DESCRIPTION: 'Erguer os haltéres com a mão na posição neutra.'
                     }
                );
           },
@@ -73,7 +48,7 @@ export const mockExerciseRoutes = () => {
                     },
                )
 
-               this.get('/exercises/:id',
+               this.get('/exercise/:id',
                     (schema, request) => {
                          const id = request.params.id;
                          return schema.db.exercises.find(id);
@@ -100,12 +75,10 @@ export const mockExerciseRoutes = () => {
                     (schema, request) => {
                          const id = request.params.id
                          schema.db.exercises.remove(id)
-                         return {message: 'Deleted'}
+                         return { message: 'Deleted' }
                     },
                )
           },
-
-
      })
 
      return exerciseRoutes;

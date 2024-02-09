@@ -1,7 +1,13 @@
 export interface ExercisesType {
-     id: number, 
-     name: string,
-     category: string,
-     video?: File,
-     image?: File
+     NAME: string,
+     CATEGORY_ID: number,
+     DESCRIPTION: string,
+     VIDEO?: File,
+     IMAGE?: File
+} 
+
+export interface ExercisesListType {
+     ID: number,
+     NAME: string,
+     CATEGORY?: string,
 } 

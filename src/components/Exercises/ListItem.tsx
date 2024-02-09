@@ -1,10 +1,10 @@
 import { Flex, Tag, Text } from "@chakra-ui/react";
 import { ListIconButton } from "../ListIconButton";
 import { colors } from "../../constants/colors";
-import { ExercisesType } from "../../types/exercises";
+import { ExercisesListType } from "../../types/exercises";
 
 interface ListItemProps {
-     exercise: ExercisesType
+     exercise: ExercisesListType
      editAction: () => void,
      deleteAction: () => void,
 }
@@ -28,13 +28,13 @@ export function ListItem({ exercise, editAction, deleteAction }: ListItemProps) 
                          color={colors.basicTextColor}
                          width={'70%'}
                     >
-                         {exercise?.name}
+                         {exercise?.NAME}
                     </Text>
                     <Tag
                          width={'5rem'}
                          justifyContent={'center'}
                     >
-                         {exercise.category}
+                         {exercise.CATEGORY}
                     </Tag>
                </Flex>
                <Flex
