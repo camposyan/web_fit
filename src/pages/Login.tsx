@@ -5,7 +5,7 @@ import { Input } from "../components/Input";
 import { useState } from "react";
 import { EyeSlash, Lock, Eye, User } from "@phosphor-icons/react";
 import { Button } from "../components/Button";
-import { axiosClient } from "../services/axiosClient";
+// import { axiosClient } from "../services/axiosClient";
 import { useNavigate } from "react-router-dom";
 import { useUtils } from "../hooks/useUtils";
 
@@ -23,25 +23,30 @@ export function Login() {
      const [invalidatedInputs, setInvalidatedInputs] = useState<string[]>([''])
 
      const login = async (email: string, password: string) => {
-          await axiosClient.post('/user/login', {
-               email: email,
-               password: password
+          toast({
+               title: 'Erro ao realizar o login!',
+               description: `Um erro inesperado aconteceu. Entre em contato com o suporte. Cód: ${email} ${password}`,
+               status: 'error'
           })
-               .then((response) => {
-                    window?.localStorage.setItem('LOGIN-TOKEN', response.data.token);
+          // await axiosClient.post('/user/login', {
+          //      email: email,
+          //      password: password
+          // })
+          //      .then((response) => {
+          //           window?.localStorage.setItem('LOGIN-TOKEN', response.data.token);
 
-                    navigate("/pratical_tests");
-               })
-               .catch((error) => {
-                    toast({
-                         title: 'Erro ao realizar o login!',
-                         description: `Um erro inesperado aconteceu. Entre em contato com o suporte. Cód: ${error.response.data.status}`,
-                         status: 'error'
-                    })
-               })
-               .finally(() => {
-                    setIsLoading(false);
-               })
+          //           navigate("/pratical_tests");
+          //      })
+          //      .catch((error) => {
+          //           toast({
+          //                title: 'Erro ao realizar o login!',
+          //                description: `Um erro inesperado aconteceu. Entre em contato com o suporte. Cód: ${error.response.data.status}`,
+          //                status: 'error'
+          //           })
+          //      })
+          //      .finally(() => {
+          //           setIsLoading(false);
+          //      })
      }
 
      const handleLoginButtonClick = async () => {
@@ -53,7 +58,7 @@ export function Login() {
           if (validation.isValidated) {
                setIsLoading(true);
 
-               // await login(userEmail, userPassword);
+               await login(userEmail, userPassword);
                navigate("/home");
           } else {
                setInvalidatedInputs(validation.invalidatedInputs)
