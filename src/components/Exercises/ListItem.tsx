@@ -22,6 +22,7 @@ export function ListItem({ exercise, editAction, deleteAction }: ListItemProps) 
                <Flex
                     flex={1}
                     alignItems={'center'}
+                    direction={{ base: 'column', sm: 'column', md: 'row' }}
                >
                     <Text
                          fontSize='lg'
