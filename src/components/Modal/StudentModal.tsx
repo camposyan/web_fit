@@ -22,6 +22,7 @@ export function StudentModal({ isOpen, setIsOpen, isEditing, setIsEditing, isLoa
 
      const { inputsValidation } = useUtils();
 
+     const [studentName, setStudentName] = useState<string>('');
      const [name, setName] = useState<string>('');
      const [email, setEmail] = useState<string>('');
      const [cellphone, setCellphone] = useState<string>('');
@@ -33,6 +34,7 @@ export function StudentModal({ isOpen, setIsOpen, isEditing, setIsEditing, isLoa
      const [invalidatedInputs, setInvalidatedInputs] = useState<string[]>([]);
 
      function resetStates() {
+          setStudentName('');
           setName('');
           setEmail('');
           setCellphone('');
@@ -77,11 +79,11 @@ export function StudentModal({ isOpen, setIsOpen, isEditing, setIsEditing, isLoa
      async function updateStudent(data: StudentsRequestType) { //TODO: colocar rota
           setIsButtonLoading(true);
 
-          await axiosClient.put(`http://localhost:5173/api/user/${editingData?.ID}`, data)
+          await axiosClient.put(`http://localhost:5173/api/student/${editingData?.ID}`, data)
                .then(async () => {
                     toast({
                          title: 'Sucesso!',
-                         description: 'Usuário editado!',
+                         description: 'Aluno editado!',
                          status: 'success'
                     });
 
@@ -125,18 +127,19 @@ export function StudentModal({ isOpen, setIsOpen, isEditing, setIsEditing, isLoa
      }
 
      useEffect(() => {
-          setName(editingData?.NAME as string)
-          setEmail(editingData?.EMAIL as string)
-          setCellphone(editingData?.CELLPHONE as string)
-          setIsWppCell(editingData?.IS_WPP_CELL as boolean)
-          setIsActive(editingData?.ACTIVE as boolean)
+          setStudentName(editingData?.NAME as string);
+          setName(editingData?.NAME as string);
+          setEmail(editingData?.EMAIL as string);
+          setCellphone(editingData?.CELLPHONE as string);
+          setIsWppCell(editingData?.IS_WPP_CELL as boolean);
+          setIsActive(editingData?.ACTIVE as boolean);
      }, [editingData])
 
      return (
           <Modal
                isOpen={isOpen}
                onClose={closeModal}
-               title={isEditing ? 'Editar Aluno' : "Cadastrar Aluno"}
+               title={isEditing ? `Editar Aluno ${studentName}` : "Cadastrar Aluno"}
                size={"4xl"}
                isEditing={isEditing}
                isLoading={isLoading}

@@ -13,6 +13,9 @@ export const colors = {
      unblockButtonBackgroundColor: '#059931',
      visualizeButtonBackgroundColor: '#059931',
      trainingButtonBackgroundColor: '#E65A0F',
+     whatsappButtonBackgroundColor: '#25D366',
+     disabledButtonBackgroundColor: '#787878',
 
      listItemBackgroundColor: '#666',
+
 }

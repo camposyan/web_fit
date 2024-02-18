@@ -1,6 +1,6 @@
 import { Flex, Text } from "@chakra-ui/react";
 import { UsersListType } from "../../types/users";
-import { ListIconButton } from "../ListIconButton";
+import { ListIconButton, WhatsappIconButton } from "../ListIconButton";
 import { colors } from "../../constants/colors";
 import { WhatsappLogo } from "@phosphor-icons/react";
 
@@ -10,6 +10,8 @@ interface StudentListItemProps {
 }
 
 export function StudentListItem({ user, editAction }: StudentListItemProps) {
+     const unformattedCellphone = user.CELLPHONE.replace('(', '').replace(')', '').replace('-', '');
+
      return (
           <Flex
                padding={'1rem'}
@@ -55,6 +57,12 @@ export function StudentListItem({ user, editAction }: StudentListItemProps) {
                          type={"training"}
                          onClick={() => ''}
                     />
+                    {
+                         user.IS_WPP_CELL &&
+                         <WhatsappIconButton
+                              linkTo={`https://wa.me/${unformattedCellphone}`}
+                         />
+                    }
                </Flex>
           </Flex>
      )
