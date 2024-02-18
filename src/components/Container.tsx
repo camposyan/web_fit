@@ -1,14 +1,18 @@
-import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
+import { Box, Breadcrumb, BreadcrumbItem, BreadcrumbLink, Flex, Spinner, Text } from "@chakra-ui/react";
 import { ReactNode } from "react";
 import { colors } from "../constants/colors";
 
 interface ContainerProps {
      title: string,
-     isLoading: boolean
-     children: ReactNode
+     isLoading: boolean,
+     children: ReactNode,
+     breadcrumbItems?: {
+          title: string,
+          link: string,
+     }[],
 }
 
-export function Container({ title, isLoading, children }: ContainerProps) {
+export function Container({ title, isLoading, children, breadcrumbItems }: ContainerProps) {
      return (
           <Box
                width={{ base: '100vw', lg: '70rem' }}
@@ -30,6 +34,25 @@ export function Container({ title, isLoading, children }: ContainerProps) {
                     >
                          {title}
                     </Text>
+                    {
+                         breadcrumbItems &&
+                         <Breadcrumb>
+                              {
+                                   breadcrumbItems?.map((item, index) => {
+                                        return (
+                                             <BreadcrumbItem key={index}>
+                                                  <BreadcrumbLink
+                                                       href={item.link}
+                                                       color={colors.basicTextColor}
+                                                  >
+                                                       {item.title}
+                                                  </BreadcrumbLink>
+                                             </BreadcrumbItem>
+                                        )
+                                   })
+                              }
+                         </Breadcrumb>
+                    }
                     <Flex
                          flex={1}
                          justifyContent={isLoading ? 'center' : 'flex-start'}

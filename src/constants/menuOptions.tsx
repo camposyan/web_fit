@@ -9,9 +9,14 @@ export const menuOptions: MenuOptionsType[] = [
      },
      {
           icon: <UserCircle size={30} />,
-          text: 'Usuários',
-          link: '/users',
+          text: 'Alunos',
+          link: '/students',
      },
+     // {
+     //      icon: <UserCircle size={30} />,
+     //      text: 'Usuários',
+     //      link: '/users',
+     // },
      {
           icon: <Barbell size={30} />,
           text: 'Exercícios',
