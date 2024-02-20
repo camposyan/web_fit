@@ -7,7 +7,7 @@ import { MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { Button } from "../components/Button";
 import { ListItem } from "../components/Exercises/ListItem";
 import { Modal } from "../components/Modal";
-import { axiosClient, getAxiosConfig } from "../services/axiosClient";
+import { axiosClient } from "../services/axiosClient";
 import { useUtils } from "../hooks/useUtils";
 import { ExercisesListType, ExercisesType } from "../types/exercises";
 import { Select } from "../components/Select";
@@ -59,7 +59,7 @@ export function Exercises() {
      const getAllExercises = async () => { //TODO: colocar rota
           setIsLoading(true);
 
-          await axiosClient.get('http://localhost:5173/api/exercises', getAxiosConfig())
+          await axiosClient.get('http://localhost:5173/api/exercises')
                .then((response) => {
                     setAllExercises(response.data);
                })
@@ -78,7 +78,7 @@ export function Exercises() {
      const getExercise = async (exerciseId: number) => { //TODO: colocar rota
           setIsModalLoading(true);
 
-          await axiosClient.get(`http://localhost:5173/api/exercise/${exerciseId}`, getAxiosConfig())
+          await axiosClient.get(`http://localhost:5173/api/exercise/${exerciseId}`)
                .then((response) => {
                     const exercise: ExercisesType = response.data;
 
@@ -101,7 +101,7 @@ export function Exercises() {
      const storeExercise = async (data: ExercisesType) => { //TODO: colocar rota
           setIsModalButtonLoading(true);
 
-          await axiosClient.post('http://localhost:5173/api/exercise/', data, getAxiosConfig())
+          await axiosClient.post('http://localhost:5173/api/exercise/', data)
                .then(async () => {
                     toast({
                          title: 'Sucesso!',
@@ -129,7 +129,7 @@ export function Exercises() {
      const updateExercise = async (data: ExercisesType) => { //TODO: colocar rota
           setIsModalButtonLoading(true);
 
-          await axiosClient.put(`http://localhost:5173/api/exercise/${editingId}`, data, getAxiosConfig())
+          await axiosClient.put(`http://localhost:5173/api/exercise/${editingId}`, data)
                .then(async () => {
                     toast({
                          title: 'Sucesso!',
@@ -157,7 +157,7 @@ export function Exercises() {
      const deleteExercise = async () => { //TODO: colocar rota
           setIsConfirmModalButtonLoading(true);
 
-          await axiosClient.delete(`http://localhost:5173/api/exercise/${deletingId}`, getAxiosConfig())
+          await axiosClient.delete(`http://localhost:5173/api/exercise/${deletingId}`)
                .then(async () => {
                     toast({
                          title: 'Sucesso!',

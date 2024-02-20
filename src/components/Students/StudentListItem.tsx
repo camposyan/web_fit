@@ -7,9 +7,10 @@ import { WhatsappLogo } from "@phosphor-icons/react";
 interface StudentListItemProps {
      user: UsersListType
      editAction: () => void,
+     deleteAction: () => void,
 }
 
-export function StudentListItem({ user, editAction }: StudentListItemProps) {
+export function StudentListItem({ user, editAction, deleteAction }: StudentListItemProps) {
      const unformattedCellphone = user.CELLPHONE.replace('(', '').replace(')', '').replace('-', '');
 
      return (
@@ -57,12 +58,15 @@ export function StudentListItem({ user, editAction }: StudentListItemProps) {
                          type={"training"}
                          onClick={() => ''}
                     />
-                    {
-                         user.IS_WPP_CELL &&
-                         <WhatsappIconButton
-                              linkTo={`https://wa.me/${unformattedCellphone}`}
-                         />
-                    }
+                    <WhatsappIconButton
+                         isWpp={user.IS_WPP_CELL}
+                         linkTo={`https://wa.me/${unformattedCellphone}`}
+                    />
+                    <ListIconButton
+                         title={"Excluir"}
+                         type={"delete"}
+                         onClick={deleteAction}
+                    />
                </Flex>
           </Flex>
      )

@@ -6,10 +6,11 @@ import { IconButton } from "../components/IconButton";
 import { MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { Button } from "../components/Button";
 import { StudentsListType, StudentsRequestType } from "../types/students";
-import { axiosClient, getAxiosConfig } from "../services/axiosClient";
+import { axiosClient } from "../services/axiosClient";
 import { mockStudentsRoutes } from "../mocks/mock_students";
-import { StudentListItem } from "../components/ListItem/StudentListItem";
-import { StudentModal } from "../components/Modal/StudentModal";
+import { StudentListItem } from "../components/Students/StudentListItem";
+import { StudentModal } from "../components/Students/StudentModal";
+import { StudentConfirmModal } from "../components/Students/StudentConfirmModal";
 
 export function Students() {
      const toast = useToast();
@@ -18,9 +19,11 @@ export function Students() {
 
      const [allStudents, setAllStudents] = useState<StudentsListType[]>([]);
 
-     const [studentData, setStudentData] = useState<StudentsRequestType | null>(null)
+     const [studentData, setStudentData] = useState<StudentsRequestType | null>(null);
 
      const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
+
      const [isEditing, setIsEditing] = useState<boolean>(false);
      const [isLoading, setIsLoading] = useState<boolean>(false);
      const [isModalLoading, setIsModalLoading] = useState<boolean>(false);
@@ -28,7 +31,7 @@ export function Students() {
      const getAllStudents = async () => { //TODO: colocar rota
           setIsLoading(true);
 
-          await axiosClient.get('http://localhost:5173/api/students', getAxiosConfig())
+          await axiosClient.get('http://localhost:5173/api/students')
                .then((response) => {
                     setAllStudents(response.data);
                })
@@ -47,10 +50,10 @@ export function Students() {
      const getStudent = async (userId: number) => { //TODO: colocar rota
           setIsModalLoading(true);
 
-          await axiosClient.get(`http://localhost:5173/api/students/${userId}`, getAxiosConfig())
+          await axiosClient.get(`http://localhost:5173/api/students/${userId}`)
                .then((response) => {
                     const user: StudentsRequestType = response.data;
-                    
+
                     setStudentData({
                          ID: user.ID,
                          NAME: user.NAME,
@@ -81,6 +84,12 @@ export function Students() {
           setIsEditing(true);
 
           setIsModalOpen(true);
+
+          await getStudent(userId);
+     }
+
+     const handleDeleteButtonClick = async (userId: number) => {
+          setIsConfirmModalOpen(true);
 
           await getStudent(userId);
      }
@@ -161,6 +170,7 @@ export function Students() {
                                                   user={user}
                                                   key={index}
                                                   editAction={() => handleEditButtonClick(user.ID)}
+                                                  deleteAction={() => handleDeleteButtonClick(user.ID)}
                                              />
                                         )
                                    })
@@ -176,6 +186,12 @@ export function Students() {
                     isLoading={isModalLoading}
                     getAllStudents={getAllStudents}
                     editingData={studentData}
+               />
+               <StudentConfirmModal
+                    isOpen={isConfirmModalOpen}
+                    setIsOpen={setIsConfirmModalOpen}
+                    getAllStudents={getAllStudents}
+                    deletingData={studentData}
                />
           </>
      )

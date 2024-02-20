@@ -86,36 +86,36 @@ export function ListIconButton({ title, type, isLoading, onClick, isDisabled }: 
 }
 
 interface WhatsappIconButtonProps {
+     isWpp: boolean,
      linkTo: string
 }
 
-export function WhatsappIconButton({ linkTo }: WhatsappIconButtonProps) {
+export function WhatsappIconButton({ linkTo, isWpp }: WhatsappIconButtonProps) {
      return (
-          <Link
-               to={linkTo}
-               target="_blank"
+          <Tooltip
+               label={'Whatsapp'}
+               aria-label={'tooltip'}
+               hasArrow
+               placement="top"
+               backgroundColor={colors.mainBackgroundColor}
           >
-               <Tooltip
-                    label={'Whatsapp'}
-                    aria-label={'tooltip'}
-                    hasArrow
-                    placement="top"
-                    backgroundColor={colors.mainBackgroundColor}
+               <Chakra_IconButton
+                    as={Link}
+                    to={linkTo}
+                    target="_blank"
+                    height={'2.5rem'}
+                    width={'2.5rem'}
+                    backgroundColor={colors.whatsappButtonBackgroundColor}
+                    color={colors.basicTextColor}
+                    _hover={{
+                         filter: 'brightness(0.9)',
+                    }}
+                    fontSize={'1.3rem'}
+                    aria-label={'whatsapp'}
+                    isDisabled={!isWpp}
                >
-                    <Chakra_IconButton
-                         height={'2.5rem'}
-                         width={'2.5rem'}
-                         backgroundColor={colors.whatsappButtonBackgroundColor}
-                         color={colors.basicTextColor}
-                         _hover={{
-                              filter: 'brightness(0.9)',
-                         }}
-                         fontSize={'1.3rem'}
-                         aria-label={'whatsapp'}
-                    >
-                         <WhatsappLogo />
-                    </Chakra_IconButton>
-               </Tooltip>
-          </Link>
+                    <WhatsappLogo />
+               </Chakra_IconButton>
+          </Tooltip>
      )
 }
