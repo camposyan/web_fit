@@ -6,6 +6,7 @@ import { Users } from "./pages/Users";
 import { Exercises } from "./pages/Exercises";
 import { Sheets } from "./pages/Sheets";
 import { Students } from "./pages/Students";
+import { StudentSheet } from "./pages/StudentSheet";
 
 export const Router = createBrowserRouter(
      createRoutesFromElements(
@@ -13,10 +14,11 @@ export const Router = createBrowserRouter(
                <Route path="/" element={<Login />} />
                <Route path="/" element={<DefaultLayout />}>
                     <Route path="home" element={<Home />} />
-                    <Route path="users" element={<Users />} />
-                    <Route path="students" element={<Students />} />
-                    <Route path="exercises" element={<Exercises />} />
-                    <Route path="sheets" element={<Sheets />} />
+                    <Route path="usuarios" element={<Users />} />
+                    <Route path="alunos" element={<Students />} />
+                    <Route path="exercicios" element={<Exercises />} />
+                    <Route path="fichas" element={<Sheets />} />
+                    <Route path="fichas/:id" element={<StudentSheet />} />
                </Route>
           </>
      )

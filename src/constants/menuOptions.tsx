@@ -10,7 +10,7 @@ export const menuOptions: MenuOptionsType[] = [
      {
           icon: <UserCircle size={30} />,
           text: 'Alunos',
-          link: '/students',
+          link: '/alunos',
      },
      // {
      //      icon: <UserCircle size={30} />,
@@ -20,12 +20,12 @@ export const menuOptions: MenuOptionsType[] = [
      {
           icon: <Barbell size={30} />,
           text: 'Exercícios',
-          link: '/exercises',
+          link: '/exercicios',
      },
      {
           icon: <Article size={30} />,
           text: 'Fichas',
-          link: '/sheets',
+          link: '/fichas',
      },
 ];
 

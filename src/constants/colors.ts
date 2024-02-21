@@ -17,5 +17,4 @@ export const colors = {
      disabledButtonBackgroundColor: '#787878',
 
      listItemBackgroundColor: '#666',
-
 }

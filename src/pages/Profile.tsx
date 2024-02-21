@@ -44,7 +44,7 @@ export function Profile() {
      // const getProfile = async () => { //TODO: colocar rota
      //      setIsLoading(true);
 
-     //      await axiosClient.get(`/${editingId}`, getAxiosConfig())
+     //      await axiosClient.get(`/${editingId}`)
      //           .then((response) => {
      //                // setAllUsers(response.data);
      //           })
@@ -63,7 +63,7 @@ export function Profile() {
      // const storeProfile = async (data: ExercisesType) => { //TODO: colocar rota
      //      setIsLoading(true);
 
-     //      await axiosClient.post('/', data, getAxiosConfig())
+     //      await axiosClient.post('/', data)
      //           .then(async (response) => {
      //                toast({
      //                     title: 'Sucesso!',
@@ -89,7 +89,7 @@ export function Profile() {
      // const updateProfile = async (data: ExercisesType) => { //TODO: colocar rota
      //      setIsLoading(true);
 
-     //      await axiosClient.post(`/${editingId}`, data, getAxiosConfig())
+     //      await axiosClient.post(`/${editingId}`, data)
      //           .then(async (response) => {
      //                toast({
      //                     title: 'Sucesso!',

@@ -53,7 +53,7 @@ export function Users() {
      const getAllUsers = async () => { //TODO: colocar rota
           setIsLoading(true);
 
-          await axiosClient.get('http://localhost:5173/api/users', getAxiosConfig())
+          await axiosClient.get('http://localhost:5173/api/users')
                .then((response) => {
                     setAllUsers(response.data);
                })
@@ -72,7 +72,7 @@ export function Users() {
      const getUser = async (userId: number) => { //TODO: colocar rota
           setIsModalLoading(true);
 
-          await axiosClient.get(`http://localhost:5173/api/users/${userId}`, getAxiosConfig())
+          await axiosClient.get(`http://localhost:5173/api/users/${userId}`)
                .then((response) => {
                     const user: UsersType = response.data;
 
@@ -124,7 +124,7 @@ export function Users() {
      const updateUser = async (data: UsersType) => { //TODO: colocar rota
           setIsModalButtonLoading(true);
 
-          await axiosClient.put(`http://localhost:5173/api/user/${editingId}`, data, getAxiosConfig())
+          await axiosClient.put(`http://localhost:5173/api/user/${editingId}`, data)
                .then(async () => {
                     toast({
                          title: 'Sucesso!',
@@ -150,7 +150,7 @@ export function Users() {
      }
 
      const handleToggleActiveUser = async (userId: number) => {
-          await axiosClient.get(`http://localhost:5173/api/users/${userId}`, getAxiosConfig())
+          await axiosClient.get(`http://localhost:5173/api/users/${userId}`)
                .then(async (response) => {
                     const user: UsersType = response.data;
                     const data: UsersType = {
@@ -162,7 +162,7 @@ export function Users() {
                          PERSONAL_ID: 1
                     }
 
-                    await axiosClient.put(`http://localhost:5173/api/user/${userId}`, data, getAxiosConfig())
+                    await axiosClient.put(`http://localhost:5173/api/user/${userId}`, data)
                          .then(async () => {
                               toast({
                                    title: 'Sucesso!',
