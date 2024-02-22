@@ -8,7 +8,7 @@ import { Button } from "../components/Button";
 import { UsersListType, UsersType } from "../types/users";
 import { ListItem } from "../components/Users/ListItem";
 import { Modal } from "../components/Modal";
-import { axiosClient, getAxiosConfig } from "../services/axiosClient";
+import { axiosClient } from "../services/axiosClient";
 import { useUtils } from "../hooks/useUtils";
 import { Checkbox } from "../components/Checkbox";
 import { mockUserRoutes } from "../mocks/mock_users";

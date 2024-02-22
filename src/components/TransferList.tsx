@@ -18,7 +18,7 @@ interface TransferListProps {
      setIsLoading: Dispatch<SetStateAction<boolean>>
 }
 
-export function TransferList({ allItems, studentItems, isLoading, setIsLoading, setAllItems, setStudentItems }: TransferListProps) {
+export function TransferList({ allItems, studentItems, isLoading, setAllItems, setStudentItems }: TransferListProps) {
      const toast = useToast();
 
      const scrollStyle = {
