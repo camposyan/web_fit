@@ -17,10 +17,10 @@ export function Button({ primary, width, icon, text, isLoading, onClick }: Butto
                width={width}
                isLoading={isLoading}
                onClick={onClick}
-               backgroundColor={primary ? colors.primaryColor : ''}
-               border={colors.primaryColor}
+               backgroundColor={primary ? colors.primaryColor : 'inherit'}
+               border={`1px solid ${colors.primaryColor}`}
                color={primary ? colors.basicTextColor : colors.primaryColor}
-               _hover={{backgroundColor: colors.primaryColorHover }}
+               _hover={{backgroundColor: colors.primaryColorHover, color: colors.basicTextColor }}
                fontSize={'1.3rem'}
                gap={'0.5rem'}
                fontWeight={'normal'}

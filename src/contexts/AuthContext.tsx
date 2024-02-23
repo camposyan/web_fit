@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useState } from "react";
+import { ReactNode, createContext, useContext, useState } from "react";
 import { axiosClient } from "../services/axiosClient";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
@@ -8,7 +8,7 @@ interface AuthContextProps {
 }
 
 interface AuthContextData {
-     signed: boolean
+     isLoggedIn: boolean
      user: UserDataType | null
      login(userEmail: string, userPassword: string): Promise<void>
 }
@@ -17,46 +17,48 @@ interface UserDataType {
      id: number,
      email: string,
      name: string,
-     token: string,
+     // token: string,
 }
 
-export const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+const AuthContext = createContext<AuthContextData>({} as AuthContextData);
+
+export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: AuthContextProps) => {
      const toast = useToast();
      const navigate = useNavigate();
-     
-     const [user, setUser] = useState<UserDataType | null>(null);
 
-     const login = async (userEmail: string, userPassword: string) => {
-          await axiosClient.post('/question-bank/user/login', {
+     const [user, setUser] = useState<UserDataType | null>(null);
+     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
+
+     async function login(userEmail: string, userPassword: string) {
+          const data = {
                email: userEmail,
                password: userPassword,
-          })
+          }
+
+          await axiosClient.post('http://localhost:5173/api/login', data)
                .then((response) => {
-                    axiosClient.defaults.headers.Authorization = `Bearer ${response.data.token}`
-                    window?.localStorage.setItem('USER-TOKEN', response.data.token)
-                    
+                    // axiosClient.interceptors.request.use(
+                    //      function (config) {
+                    //           config.headers['Authorization'] = `Bearer ${''}`
+
+                    //           return config;
+                    //      }
+                    // )
+
                     setUser({
                          id: response.data.id,
                          name: response.data.name,
                          email: response.data.email,
-                         token: response.data.token
-                    })
+                         // token: response.data.token
+                    });
+                    setIsLoggedIn(true);
 
-                    const profiles = response.data.profiles;
-
-                    if (profiles.find((profile: any) => profile.id == 1)) {
-                         navigate('/dashboard')
-                    } else {
-                         toast({
-                              title: 'Acesso negado!',
-                              description: 'Usuário não possui permissão de acesso ao módulo de treinamento.',
-                              status: 'error'
-                         })
-                    }
+                    navigate('/dashboard')
                })
                .catch((error) => {
+                    console.log(error);
                     toast({
                          title: 'Acesso negado!',
                          description: error.response.data.message,
@@ -66,16 +68,8 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
      }
 
      return (
-          <AuthContext.Provider value={{signed: Boolean(user), login, user }}>
+          <AuthContext.Provider value={{ isLoggedIn, login, user }}>
                {children}
           </AuthContext.Provider>
      )
 }
-
-// export const AXIOS_CONFIG = {
-//      headers: {
-//          "Content-Type": "application/json",
-//          Authorization: `Bearer ${getTokenFromLocalStorage()}`,
-//        },
-//  }
-

@@ -22,6 +22,7 @@ export const mockLoginRoutes = () => {
 
                this.post("/login",
                     (schema, request) => {
+                         console.log(request);
                          const data = JSON.parse(request.requestBody);
                          return schema.db.users.find(data.id);
                     },

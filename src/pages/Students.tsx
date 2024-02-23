@@ -28,7 +28,7 @@ export function Students() {
      const [isLoading, setIsLoading] = useState<boolean>(false);
      const [isModalLoading, setIsModalLoading] = useState<boolean>(false);
 
-     const getAllStudents = async () => { //TODO: colocar rota
+     async function getAllStudents() { //TODO: colocar rota
           setIsLoading(true);
 
           await axiosClient.get('http://localhost:5173/api/students')
@@ -47,7 +47,7 @@ export function Students() {
                });
      }
 
-     const getStudent = async (userId: number) => { //TODO: colocar rota
+     async function getStudent(userId: number) { //TODO: colocar rota
           setIsModalLoading(true);
 
           await axiosClient.get(`http://localhost:5173/api/students/${userId}`)
@@ -76,11 +76,7 @@ export function Students() {
                });
      }
 
-     const handleClickAddNewButton = () => {
-          setIsModalOpen(true);
-     }
-
-     const handleEditButtonClick = async (userId: number) => {
+     async function handleEditButtonClick(userId: number) {
           setIsEditing(true);
 
           setIsModalOpen(true);
@@ -88,13 +84,17 @@ export function Students() {
           await getStudent(userId);
      }
 
-     const handleDeleteButtonClick = async (userId: number) => {
+     async function handleDeleteButtonClick(userId: number) {
           setIsConfirmModalOpen(true);
 
           await getStudent(userId);
      }
 
-     const handleSearchButtonClick = () => {
+     function handleClickAddNewButton() {
+          setIsModalOpen(true);
+     }
+
+     function handleSearchButtonClick() {
           // const searchedUsers = allStudents.find(user => user.NAME.toLowerCase() === searchName.toLowerCase())
 
           // console.log(searchedUsers);

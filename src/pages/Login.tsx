@@ -1,20 +1,17 @@
-import { Flex, Image, useToast } from "@chakra-ui/react";
+import { Flex, Image } from "@chakra-ui/react";
 import { colors } from "../constants/colors";
 import logo from '../assets/logo.jpg'
 import { Input } from "../components/Input";
 import { useEffect, useState } from "react";
 import { EyeSlash, Lock, Eye, User } from "@phosphor-icons/react";
 import { Button } from "../components/Button";
-import { axiosClient } from "../services/axiosClient";
-import { useNavigate } from "react-router-dom";
 import { useUtils } from "../hooks/useUtils";
 import { mockLoginRoutes } from "../mocks/mock_login";
+import { useAuth } from "../contexts/AuthContext";
 
 export function Login() {
-     const toast = useToast();
-     const navigate = useNavigate();
-
      const { emailValidation, passwordValidation, inputsValidation } = useUtils();
+     const { login } = useAuth();
 
      const [userEmail, setUserEmail] = useState<string>('');
      const [userPassword, setUserPassword] = useState<string>('');
@@ -22,35 +19,6 @@ export function Login() {
      const [seePassword, setSeePassword] = useState<boolean>(false);
      const [isLoading, setIsLoading] = useState<boolean>(false);
      const [invalidatedInputs, setInvalidatedInputs] = useState<string[]>([''])
-
-     const login = async (email: string, password: string) => {
-          // toast({
-          //      title: 'Erro ao realizar o login!',
-          //      description: `Um erro inesperado aconteceu. Entre em contato com o suporte. Cód: ${email} ${password}`,
-          //      status: 'error'
-          // })
-          await axiosClient.post('http://localhost:5173/api/login', {
-               id: '2',
-               EMAIL: email,
-               PASSWORD: password
-          })
-               .then(() => {
-                    // window?.localStorage.setItem('LOGIN-TOKEN', response.data.token);
-
-                    navigate("/home");
-               })
-               .catch((error) => {
-                    console.log(error);
-                    toast({
-                         title: 'Erro ao realizar o login!',
-                         description: `Um erro inesperado aconteceu. Entre em contato com o suporte. Cód: ${error.response.data.status}`,
-                         status: 'error'
-                    })
-               })
-               .finally(() => {
-                    setIsLoading(false);
-               })
-     }
 
      const handleLoginButtonClick = async () => {
           const validation = inputsValidation([

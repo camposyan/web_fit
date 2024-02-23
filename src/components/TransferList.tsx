@@ -1,6 +1,6 @@
 import { Flex, Spinner, Text, useToast } from "@chakra-ui/react";
 import { colors } from "../constants/colors";
-import { ArrowLeft, ArrowRight } from "@phosphor-icons/react";
+import { CaretDoubleLeft, CaretDoubleRight } from "@phosphor-icons/react";
 import { Dispatch, SetStateAction } from "react";
 import { IconButton } from "./IconButton";
 
@@ -74,7 +74,6 @@ export function TransferList({ allItems, studentItems, isLoading, setAllItems, s
           setStudentItems(studentItemsArray);
           setAllItems(allItemsArrayNew);
      }
-
 
      async function handleRemoveItemClick(item: ItemType) {
           const allItemsArray = [...allItems];
@@ -178,12 +177,12 @@ export function TransferList({ allItems, studentItems, isLoading, setAllItems, s
                >
                     <IconButton
                          primary={false}
-                         icon={<ArrowRight />}
+                         icon={<CaretDoubleRight />}
                          onClick={handleAddAllItemsClick}
                     />
                     <IconButton
                          primary={false}
-                         icon={<ArrowLeft />}
+                         icon={<CaretDoubleLeft />}
                          onClick={handleRemoveAllItemsClick}
                     />
                </Flex>
