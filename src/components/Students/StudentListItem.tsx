@@ -3,6 +3,7 @@ import { UsersListType } from "../../types/users";
 import { ListIconButton, WhatsappIconButton } from "../ListIconButton";
 import { colors } from "../../constants/colors";
 import { WhatsappLogo } from "@phosphor-icons/react";
+import { useNavigate } from "react-router-dom";
 
 interface StudentListItemProps {
      user: UsersListType
@@ -11,6 +12,8 @@ interface StudentListItemProps {
 }
 
 export function StudentListItem({ user, editAction, deleteAction }: StudentListItemProps) {
+     const navigate = useNavigate();
+     
      const unformattedCellphone = user.CELLPHONE.replace('(', '').replace(')', '').replace('-', '');
 
      return (
@@ -56,7 +59,7 @@ export function StudentListItem({ user, editAction, deleteAction }: StudentListI
                     <ListIconButton
                          title={"Treinos"}
                          type={"training"}
-                         onClick={() => ''}
+                         onClick={() => navigate(`/fichas/${user.ID}`)}
                     />
                     <WhatsappIconButton
                          isWpp={user.IS_WPP_CELL}
