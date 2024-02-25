@@ -37,34 +37,40 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
                password: userPassword,
           }
 
-          await axiosClient.post('http://localhost:5173/api/login', data)
-               .then((response) => {
-                    // axiosClient.interceptors.request.use(
-                    //      function (config) {
-                    //           config.headers['Authorization'] = `Bearer ${''}`
+          // await axiosClient.post('http://localhost:5173/api/login', data)
+          //      .then((response) => {
+          //           // axiosClient.interceptors.request.use(
+          //           //      function (config) {
+          //           //           config.headers['Authorization'] = `Bearer ${''}`
 
-                    //           return config;
-                    //      }
-                    // )
+          //           //           return config;
+          //           //      }
+          //           // )
 
-                    setUser({
-                         id: response.data.id,
-                         name: response.data.name,
-                         email: response.data.email,
-                         // token: response.data.token
-                    });
-                    setIsLoggedIn(true);
+          //           setUser({
+          //                id: response.data.id,
+          //                name: response.data.name,
+          //                email: response.data.email,
+          //                // token: response.data.token
+          //           });
+          //           setIsLoggedIn(true);
 
-                    navigate('/dashboard')
-               })
-               .catch((error) => {
-                    console.log(error);
-                    toast({
-                         title: 'Acesso negado!',
-                         description: error.response.data.message,
-                         status: 'error'
-                    })
-               })
+          //           navigate('/dashboard')
+          //      })
+          //      .catch((error) => {
+          //           console.log(error);
+          //           toast({
+          //                title: 'Acesso negado!',
+          //                description: error.response.data.message,
+          //                status: 'error'
+          //           })
+          //      })
+
+
+
+
+
+               navigate('/home')
      }
 
      return (
