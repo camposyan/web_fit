@@ -1,7 +1,7 @@
 import { ReactNode, createContext, useContext, useState } from "react";
-import { axiosClient } from "../services/axiosClient";
+// import { axiosClient } from "../services/axiosClient";
 import { useNavigate } from "react-router-dom";
-import { useToast } from "@chakra-ui/react";
+// import { useToast } from "@chakra-ui/react";
 
 interface AuthContextProps {
      children: ReactNode
@@ -25,7 +25,7 @@ const AuthContext = createContext<AuthContextData>({} as AuthContextData);
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: AuthContextProps) => {
-     const toast = useToast();
+     // const toast = useToast();
      const navigate = useNavigate();
 
      const [user, setUser] = useState<UserDataType | null>(null);
@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
                email: userEmail,
                password: userPassword,
           }
+          data
 
           // await axiosClient.post('http://localhost:5173/api/login', data)
           //      .then((response) => {
@@ -47,15 +48,15 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
           //           //      }
           //           // )
 
-          //           setUser({
-          //                id: response.data.id,
-          //                name: response.data.name,
-          //                email: response.data.email,
-          //                // token: response.data.token
-          //           });
-          //           setIsLoggedIn(true);
+                    setUser({
+                         id: 0,
+                         name: 'response.data.name',
+                         email: 'response.data.email',
+                         // token: response.data.token
+                    });
+                    setIsLoggedIn(true);
 
-          //           navigate('/dashboard')
+                    navigate('/dashboard')
           //      })
           //      .catch((error) => {
           //           console.log(error);
