@@ -139,7 +139,7 @@ export function StudentModal({ isOpen, setIsOpen, isEditing, setIsEditing, isLoa
           <Modal
                isOpen={isOpen}
                onClose={closeModal}
-               title={isEditing ? `Editar Aluno ${studentName}` : "Cadastrar Aluno"}
+               title={isEditing ? `Editar Aluno ${studentName ?? '------'}` : "Cadastrar Aluno"}
                size={"4xl"}
                isEditing={isEditing}
                isLoading={isLoading}

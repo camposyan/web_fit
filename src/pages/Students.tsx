@@ -31,7 +31,7 @@ export function Students() {
      async function getAllStudents() { //TODO: colocar rota
           setIsLoading(true);
 
-          await axiosClient.get('http://localhost:5173/api/students')
+          await axiosClient.get('/students')
                .then((response) => {
                     setAllStudents(response.data);
                })
@@ -50,7 +50,7 @@ export function Students() {
      async function getStudent(userId: number) { //TODO: colocar rota
           setIsModalLoading(true);
 
-          await axiosClient.get(`http://localhost:5173/api/students/${userId}`)
+          await axiosClient.get(`/students/${userId}`)
                .then((response) => {
                     const user: StudentsRequestType = response.data;
 
