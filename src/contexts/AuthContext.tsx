@@ -37,16 +37,16 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
                PASSWORD: userPassword,
           }
 
-          await axiosClient.post('/login', data)
-               .then((response) => {
-                    axiosClient.interceptors.request.use(
-                         function (config) {
-                              config.headers['Authorization'] = `Bearer ${response.data.token}`
+          await axiosClient.post('http://localhost:5173/api/login', data)
+               .then(() => {
+                    // axiosClient.interceptors.request.use(
+                    //      function (config) {
+                    //           config.headers['Authorization'] = `Bearer ${response.data.token}`
 
-                              return config;
-                         }
-                    )
-                         console.log(response.data);
+                    //           return config;
+                    //      }
+                    // )
+                    
                     setUser({
                          id: 0,
                          name: 'response.data.name',
