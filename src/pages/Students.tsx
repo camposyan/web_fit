@@ -31,7 +31,7 @@ export function Students() {
      async function getAllStudents() { //TODO: colocar rota
           setIsLoading(true);
 
-          await axiosClient.get('/students')
+          await axiosClient.get('http://localhost:5173/api/students')
                .then((response) => {
                     setAllStudents(response.data);
                })
