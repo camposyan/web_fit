@@ -3,6 +3,7 @@ import { ReactNode } from "react";
 import { colors } from "../constants/colors";
 
 interface ModalProps {
+     id: string,
      isOpen: boolean,
      onClose: () => void,
      title?: string,
@@ -14,9 +15,10 @@ interface ModalProps {
      primaryAction?: () => void,
 }
 
-export function Modal({ isOpen, onClose, title, children, size, isEditing, primaryAction, isLoading, isButtonLoading }: ModalProps) {
+export function Modal({ id, isOpen, onClose, title, children, size, isEditing, primaryAction, isLoading, isButtonLoading }: ModalProps) {
      return (
           <Chakra_Modal
+               id={id}
                onClose={onClose}
                isOpen={isOpen}
                isCentered
@@ -55,6 +57,7 @@ export function Modal({ isOpen, onClose, title, children, size, isEditing, prima
                               justifyContent={'space-between'}
                          >
                               <Button
+                                   id={"secondary-button"}
                                    onClick={onClose}
                                    border={`2px solid ${colors.primaryColor}`}
                                    backgroundColor={'inherit'}
@@ -69,6 +72,7 @@ export function Modal({ isOpen, onClose, title, children, size, isEditing, prima
                                    CANCELAR
                               </Button>
                               <Button
+                                   id={"primary-button"}
                                    onClick={primaryAction}
                                    isLoading={isButtonLoading}
                                    backgroundColor={colors.primaryColor}

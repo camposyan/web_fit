@@ -50,7 +50,7 @@ export function Students() {
      async function getStudent(userId: number) { //TODO: colocar rota
           setIsModalLoading(true);
 
-          await axiosClient.get(`/students/${userId}`)
+          await axiosClient.get(`http://localhost:5173/api/students/${userId}`)
                .then((response) => {
                     const user: StudentsRequestType = response.data;
 
@@ -64,7 +64,8 @@ export function Students() {
                          PERSONAL_ID: user.PERSONAL_ID
                     })
                })
-               .catch(() => {
+               .catch((error) => {
+                    console.log(error);
                     toast({
                          title: 'Erro!',
                          description: 'Erro ao buscar as informações do aluno',
@@ -153,6 +154,7 @@ export function Students() {
                                    </Grid>
                               </Flex>
                               <Button
+                                   id={"add-student"}
                                    primary
                                    icon={<Plus />}
                                    text={"Adicionar novo"}

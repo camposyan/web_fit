@@ -15,11 +15,11 @@ interface CheckboxProps {
 
 export function Checkbox({ id, isChecked, onChange, label, optionText, isRequired, isDisabled, invalidInputsArray }: CheckboxProps) {
      const isInvalid = invalidInputsArray?.find(input => input === id) === id;
-     
+
      return (
           <FormControl
-               isRequired={isRequired}
-               isInvalid={isInvalid}
+          isRequired={isRequired}
+          isInvalid={isInvalid}
           >
                <FormLabel
                     display={'flex'}
@@ -27,10 +27,11 @@ export function Checkbox({ id, isChecked, onChange, label, optionText, isRequire
                     fontSize={'xl'}
                     fontWeight={'normal'}
                     color={colors.basicTextColor}
-               >
+                    >
                     {label}
                </FormLabel>
                <Chakra_Checkbox
+                    id={id}
                     onChange={onChange}
                     isDisabled={isDisabled}
                     marginTop={'0.75rem'}

@@ -137,6 +137,7 @@ export function StudentModal({ isOpen, setIsOpen, isEditing, setIsEditing, isLoa
 
      return (
           <Modal
+               id={"student-modal"}
                isOpen={isOpen}
                onClose={closeModal}
                title={isEditing ? `Editar Aluno ${studentName ?? '------'}` : "Cadastrar Aluno"}

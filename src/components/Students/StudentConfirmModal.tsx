@@ -14,9 +14,9 @@ interface ConfirmModalProps {
 
 export function StudentConfirmModal({ deletingData, isOpen, setIsOpen, getAllStudents }: ConfirmModalProps) {
      const toast = useToast();
-     
+
      const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
-     
+
      async function deleteStudent() { //TODO: colocar rota
           setIsButtonLoading(true);
 
@@ -47,7 +47,7 @@ export function StudentConfirmModal({ deletingData, isOpen, setIsOpen, getAllStu
      async function handleDeleteButtonClick() {
           await deleteStudent();
      }
-     
+
      return (
           <Modal
                onClose={() => setIsOpen(false)}
@@ -69,6 +69,7 @@ export function StudentConfirmModal({ deletingData, isOpen, setIsOpen, getAllStu
                          justifyContent={'center'}
                     >
                          <Button
+                              id={"delete-student"}
                               onClick={handleDeleteButtonClick}
                               isLoading={isButtonLoading}
                               backgroundColor={colors.deleteButtonBackgroundColor}

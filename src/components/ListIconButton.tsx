@@ -50,6 +50,7 @@ export function ListIconButton({ title, type, isLoading, onClick, isDisabled }: 
                backgroundColor={colors.mainBackgroundColor}
           >
                <Chakra_IconButton
+                    id={type}
                     height={'2.5rem'}
                     width={'2.5rem'}
                     isLoading={isLoading}

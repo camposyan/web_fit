@@ -13,11 +13,12 @@ interface StudentListItemProps {
 
 export function StudentListItem({ user, editAction, deleteAction }: StudentListItemProps) {
      const navigate = useNavigate();
-     
+
      const unformattedCellphone = user.CELLPHONE.replace('(', '').replace(')', '').replace('-', '');
 
      return (
           <Flex
+               id={`item-${user.ID}`}
                padding={'1rem'}
                width={'100%'}
                backgroundColor={colors.listItemBackgroundColor}

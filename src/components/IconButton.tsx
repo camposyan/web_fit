@@ -2,6 +2,7 @@ import { IconButton as Chakra_IconButton } from "@chakra-ui/react";
 import { colors } from "../constants/colors";
 
 interface IconButtonProps {
+     id?: string,
      primary: boolean,
      icon: JSX.Element,
      isLoading?: boolean,
@@ -9,9 +10,10 @@ interface IconButtonProps {
      onClick: () => void
 }
 
-export function IconButton({ primary, icon, isLoading, isActive, onClick }: IconButtonProps) {
+export function IconButton({ id, primary, icon, isLoading, isActive, onClick }: IconButtonProps) {
      return (
           <Chakra_IconButton
+               id={id}
                height={'3rem'}
                width={'4rem'}
                isLoading={isLoading}
@@ -20,12 +22,12 @@ export function IconButton({ primary, icon, isLoading, isActive, onClick }: Icon
                border={primary ? '0' : '2px'}
                borderColor={colors.primaryColor}
                color={primary ? colors.basicTextColor : colors.primaryColor}
-               _hover={{ 
+               _hover={{
                     backgroundColor: colors.primaryColorHover,
                     color: colors.basicTextColor,
                     borderColor: colors.primaryColorHover,
                }}
-               _active={{ 
+               _active={{
                     backgroundColor: colors.primaryColorHover,
                     color: colors.basicTextColor,
                     borderColor: colors.primaryColorHover,
