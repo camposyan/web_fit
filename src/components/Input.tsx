@@ -4,7 +4,7 @@ import { colors } from "../constants/colors";
 import { useMask } from "@react-input/mask";
 
 interface InputProps {
-     id: string,
+     id?: string,
      type: 'text' | 'password' | 'email' | 'date',
      value: string,
      onChange: (e: ChangeEvent<HTMLInputElement>) => void,

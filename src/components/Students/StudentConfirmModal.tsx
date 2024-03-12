@@ -3,16 +3,15 @@ import { Warning } from "@phosphor-icons/react";
 import { colors } from "../../constants/colors";
 import { Dispatch, SetStateAction, useState } from "react";
 import { axiosClient } from "../../services/axiosClient";
-import { StudentsRequestType } from "../../types/students";
 
 interface ConfirmModalProps {
-     deletingData: StudentsRequestType | null,
+     deletingId: number | null,
      isOpen: boolean,
      setIsOpen: Dispatch<SetStateAction<boolean>>
      getAllStudents: () => Promise<void>
 }
 
-export function StudentConfirmModal({ deletingData, isOpen, setIsOpen, getAllStudents }: ConfirmModalProps) {
+export function StudentConfirmModal({ deletingId, isOpen, setIsOpen, getAllStudents }: ConfirmModalProps) {
      const toast = useToast();
 
      const [isButtonLoading, setIsButtonLoading] = useState<boolean>(false);
@@ -20,7 +19,7 @@ export function StudentConfirmModal({ deletingData, isOpen, setIsOpen, getAllStu
      async function deleteStudent() { //TODO: colocar rota
           setIsButtonLoading(true);
 
-          await axiosClient.delete(`http://localhost:5173/api/student/${deletingData?.ID}`)
+          await axiosClient.delete(`/students/${deletingId}`)
                .then(async () => {
                     toast({
                          title: 'Sucesso!',

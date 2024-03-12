@@ -52,7 +52,7 @@ export function StudentModal({ isOpen, setIsOpen, isEditing, setIsEditing, isLoa
      async function createStudent(data: StudentsRequestType) { //TODO: colocar rota
           setIsButtonLoading(true);
 
-          await axiosClient.post('http://localhost:5173/api/student', data)
+          await axiosClient.post('/students', data)
                .then(async () => {
                     toast({
                          title: 'Sucesso!',
@@ -79,7 +79,7 @@ export function StudentModal({ isOpen, setIsOpen, isEditing, setIsEditing, isLoa
      async function updateStudent(data: StudentsRequestType) { //TODO: colocar rota
           setIsButtonLoading(true);
 
-          await axiosClient.put(`http://localhost:5173/api/student/${editingData?.ID}`, data)
+          await axiosClient.patch(`/students/${editingData?.ID}`, data)
                .then(async () => {
                     toast({
                          title: 'Sucesso!',
@@ -105,12 +105,11 @@ export function StudentModal({ isOpen, setIsOpen, isEditing, setIsEditing, isLoa
 
      async function handlePrimaryButtonClick() {
           const data = {
-               NAME: name,
-               EMAIL: email,
+               NAME: name.toLocaleUpperCase(),
+               EMAIL: email.toLocaleLowerCase(),
                CELLPHONE: cellphone,
                IS_WPP_CELL: isWppCell,
-               ACTIVE: true,
-               PERSONAL_ID: 1
+               ACTIVE: isActive,
           }
 
           const validation = inputsValidation([

@@ -7,7 +7,6 @@ import { MagnifyingGlass, Plus } from "@phosphor-icons/react";
 import { Button } from "../components/Button";
 import { StudentsListType, StudentsRequestType } from "../types/students";
 import { axiosClient } from "../services/axiosClient";
-import { mockStudentsRoutes } from "../mocks/mock_students";
 import { StudentListItem } from "../components/Students/StudentListItem";
 import { StudentModal } from "../components/Students/StudentModal";
 import { StudentConfirmModal } from "../components/Students/StudentConfirmModal";
@@ -28,10 +27,12 @@ export function Students() {
      const [isLoading, setIsLoading] = useState<boolean>(false);
      const [isModalLoading, setIsModalLoading] = useState<boolean>(false);
 
+     const [deletetingId, setDeletetingId] = useState<number | null>(null)
+
      async function getAllStudents() { //TODO: colocar rota
           setIsLoading(true);
 
-          await axiosClient.get('http://localhost:5173/api/students')
+          await axiosClient.get('/students')
                .then((response) => {
                     setAllStudents(response.data);
                })
@@ -47,10 +48,10 @@ export function Students() {
                });
      }
 
-     async function getStudent(userId: number) { //TODO: colocar rota
+     async function getStudent(userId: number) { 
           setIsModalLoading(true);
 
-          await axiosClient.get(`http://localhost:5173/api/students/${userId}`)
+          await axiosClient.get(`/students/${userId}`)
                .then((response) => {
                     const user: StudentsRequestType = response.data;
 
@@ -61,7 +62,6 @@ export function Students() {
                          CELLPHONE: user.CELLPHONE,
                          IS_WPP_CELL: user.IS_WPP_CELL,
                          ACTIVE: user.ACTIVE,
-                         PERSONAL_ID: user.PERSONAL_ID
                     })
                })
                .catch((error) => {
@@ -87,8 +87,7 @@ export function Students() {
 
      async function handleDeleteButtonClick(userId: number) {
           setIsConfirmModalOpen(true);
-
-          await getStudent(userId);
+          setDeletetingId(userId);
      }
 
      function handleClickAddNewButton() {
@@ -102,7 +101,6 @@ export function Students() {
      }
 
      useEffect(() => {
-          mockStudentsRoutes();
           getAllStudents();
      }, [])
 
@@ -193,7 +191,7 @@ export function Students() {
                     isOpen={isConfirmModalOpen}
                     setIsOpen={setIsConfirmModalOpen}
                     getAllStudents={getAllStudents}
-                    deletingData={studentData}
+                    deletingId={deletetingId}
                />
           </>
      )

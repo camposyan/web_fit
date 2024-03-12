@@ -47,7 +47,6 @@ export function StudentSheet() {
                          CELLPHONE: user.CELLPHONE,
                          IS_WPP_CELL: user.IS_WPP_CELL,
                          ACTIVE: user.ACTIVE,
-                         PERSONAL_ID: user.PERSONAL_ID
                     })
                })
                .catch(() => {

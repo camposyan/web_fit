@@ -10,7 +10,7 @@ import { axiosClient } from "../services/axiosClient";
 import { mockStudentsRoutes } from "../mocks/mock_students";
 import { StudentListItem } from "../components/Students/StudentListItem";
 import { StudentModal } from "../components/Students/StudentModal";
-import { StudentConfirmModal } from "../components/Students/StudentConfirmModal";
+// import { StudentConfirmModal } from "../components/Students/StudentConfirmModal";
 
 export function Sheets() {
      const toast = useToast();
@@ -22,7 +22,7 @@ export function Sheets() {
      const [studentData, setStudentData] = useState<StudentsRequestType | null>(null);
 
      const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-     const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
+     // const [isConfirmModalOpen, setIsConfirmModalOpen] = useState<boolean>(false);
 
      const [isEditing, setIsEditing] = useState<boolean>(false);
      const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -61,7 +61,6 @@ export function Sheets() {
                          CELLPHONE: user.CELLPHONE,
                          IS_WPP_CELL: user.IS_WPP_CELL,
                          ACTIVE: user.ACTIVE,
-                         PERSONAL_ID: user.PERSONAL_ID
                     })
                })
                .catch(() => {
@@ -89,7 +88,7 @@ export function Sheets() {
      }
 
      const handleDeleteButtonClick = async (userId: number) => {
-          setIsConfirmModalOpen(true);
+          // setIsConfirmModalOpen(true);
 
           await getStudent(userId);
      }
@@ -187,12 +186,12 @@ export function Sheets() {
                     getAllStudents={getAllStudents}
                     editingData={studentData}
                />
-               <StudentConfirmModal
+               {/* <StudentConfirmModal
                     isOpen={isConfirmModalOpen}
                     setIsOpen={setIsConfirmModalOpen}
                     getAllStudents={getAllStudents}
                     deletingData={studentData}
-               />
+               /> */}
           </>
      )
 }

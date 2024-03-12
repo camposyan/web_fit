@@ -14,7 +14,7 @@ interface StudentListItemProps {
 export function StudentListItem({ user, editAction, deleteAction }: StudentListItemProps) {
      const navigate = useNavigate();
 
-     const unformattedCellphone = user.CELLPHONE.replace('(', '').replace(')', '').replace('-', '');
+     const unformattedCellphone = user.CELLPHONE?.replace('(', '').replace(')', '').replace('-', '');
 
      return (
           <Flex

@@ -2,7 +2,7 @@ import { Button as Chakra_Button } from "@chakra-ui/react";
 import { colors } from "../constants/colors";
 
 interface ButtonProps {
-     id: string,
+     id?: string,
      primary: boolean,
      text?: string,
      isLoading?: boolean

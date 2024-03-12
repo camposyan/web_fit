@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 import { colors } from "../constants/colors";
 
 interface ModalProps {
-     id: string,
+     id?: string,
      isOpen: boolean,
      onClose: () => void,
      title?: string,
