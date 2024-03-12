@@ -1,4 +1,4 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
 import { axiosClient } from "../services/axiosClient";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@chakra-ui/react";
@@ -10,14 +10,14 @@ interface AuthContextProps {
 interface AuthContextData {
      isLoggedIn: boolean
      user: UserDataType | null
-     login(userEmail: string, userPassword: string): Promise<void>
+     login(userName: string, userPassword: string, setIsLoading: Dispatch<SetStateAction<boolean>>): Promise<void>
 }
 
 interface UserDataType {
      id: number,
      email: string,
      name: string,
-     // token: string,
+     token: string,
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -31,39 +31,47 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
      const [user, setUser] = useState<UserDataType | null>(null);
      const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
-     async function login(userEmail: string, userPassword: string) {
+     async function login(
+          userName: string,
+          userPassword: string,
+          setIsLoading: Dispatch<SetStateAction<boolean>>
+     ): Promise<void> {
+          setIsLoading(true);
+
           const data = {
-               EMAIL: userEmail,
+               USERNAME: userName,
                PASSWORD: userPassword,
           }
 
-          await axiosClient.post('http://localhost:5173/api/login', data)
-               .then(() => {
-                    // axiosClient.interceptors.request.use(
-                    //      function (config) {
-                    //           config.headers['Authorization'] = `Bearer ${response.data.token}`
+          await axiosClient.post('/auth/login', data)
+               .then((response) => {
+                    axiosClient.interceptors.request.use(
+                         function (config) {
+                              config.headers['Authorization'] = `Bearer ${response.data.TOKEN}`
 
-                    //           return config;
-                    //      }
-                    // )
-                    
+                              return config;
+                         }
+                    )
+
                     setUser({
-                         id: 0,
-                         name: 'response.data.name',
-                         email: 'response.data.email',
-                         // token: response.data.token
+                         id: response.data.ID,
+                         name: response.data.NAME,
+                         email: response.data.EMAIL,
+                         token: response.data.TOKEN
                     });
                     setIsLoggedIn(true);
 
                     navigate('/home')
                })
-               .catch((error) => {
-                    console.log(error);
+               .catch(() => {
                     toast({
                          title: 'Acesso negado!',
-                         description: error.response.data.message,
+                         description: 'Usuário sem permissão de acesso.',
                          status: 'error'
                     })
+               })
+               .finally(() => {
+                    setIsLoading(false);
                })
      }
 

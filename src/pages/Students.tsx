@@ -29,7 +29,7 @@ export function Students() {
 
      const [deletetingId, setDeletetingId] = useState<number | null>(null)
 
-     async function getAllStudents() { //TODO: colocar rota
+     async function getAllStudents() { 
           setIsLoading(true);
 
           await axiosClient.get('/students')

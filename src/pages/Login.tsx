@@ -2,18 +2,17 @@ import { Flex, Image } from "@chakra-ui/react";
 import { colors } from "../constants/colors";
 import logo from '../assets/logo.jpg'
 import { Input } from "../components/Input";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { EyeSlash, Lock, Eye, User } from "@phosphor-icons/react";
 import { Button } from "../components/Button";
 import { useUtils } from "../hooks/useUtils";
-import { mockLoginRoutes } from "../mocks/mock_login";
 import { useAuth } from "../contexts/AuthContext";
 
 export function Login() {
-     const { emailValidation, passwordValidation, inputsValidation } = useUtils();
+     const { passwordValidation, inputsValidation } = useUtils();
      const { login } = useAuth();
 
-     const [userEmail, setUserEmail] = useState<string>('');
+     const [userName, setUserName] = useState<string>('');
      const [userPassword, setUserPassword] = useState<string>('');
 
      const [seePassword, setSeePassword] = useState<boolean>(false);
@@ -22,22 +21,18 @@ export function Login() {
 
      const handleLoginButtonClick = async () => {
           const validation = inputsValidation([
-               { name: 'login', value: userEmail, type: 'email' },
+               { name: 'login', value: userName },
                { name: 'password', value: userPassword, type: 'password' },
           ]);
 
           if (validation.isValidated) {
                setIsLoading(true);
 
-               await login(userEmail, userPassword);
+               await login(userName, userPassword, setIsLoading);
           } else {
                setInvalidatedInputs(validation.invalidatedInputs)
           }
      }
-
-     useEffect(() => {
-          mockLoginRoutes();
-     }, [])
 
      return (
           <Flex
@@ -65,13 +60,12 @@ export function Login() {
                     />
                     <Input
                          id={"login"}
-                         label={"E-mail"}
+                         label={"Usuário"}
                          inputLeftIcon={<User size={25} color={colors.basicTextColor} />}
-                         type={"email"}
+                         type={"text"}
                          width={{ base: '100%' }}
-                         value={userEmail}
-                         onChange={(e) => setUserEmail(e.target.value)}
-                         onBlur={(e) => emailValidation(e.target.value)}
+                         value={userName}
+                         onChange={(e) => setUserName(e.target.value)}
                          invalidInputsArray={invalidatedInputs}
                     />
                     <Input
