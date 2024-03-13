@@ -55,17 +55,9 @@ export function Students() {
                .then((response) => {
                     const user: StudentsRequestType = response.data;
 
-                    setStudentData({
-                         ID: user.ID,
-                         NAME: user.NAME,
-                         EMAIL: user.EMAIL,
-                         CELLPHONE: user.CELLPHONE,
-                         IS_WPP_CELL: user.IS_WPP_CELL,
-                         ACTIVE: user.ACTIVE,
-                    })
+                    setStudentData(user)
                })
-               .catch((error) => {
-                    console.log(error);
+               .catch(() => {
                     toast({
                          title: 'Erro!',
                          description: 'Erro ao buscar as informações do aluno',

@@ -1,4 +1,4 @@
-import { Flex, Text } from "@chakra-ui/react";
+import { Flex, Text, Tooltip } from "@chakra-ui/react";
 import { UsersListType } from "../../types/users";
 import { ListIconButton, WhatsappIconButton } from "../ListIconButton";
 import { colors } from "../../constants/colors";
@@ -26,6 +26,27 @@ export function StudentListItem({ user, editAction, deleteAction }: StudentListI
                borderRadius={'10px'}
                direction={{ base: 'column', sm: 'column', md: 'row' }}
           >
+               <Flex
+                    justifyContent={"center"}
+                    alignItems={"center"}
+               >
+                    <Tooltip
+                         label={user.ACTIVE ? "Ativo" : "Inativo"}
+                         aria-label={'tooltip'}
+                         hasArrow
+                         placement="top"
+                         backgroundColor={colors.mainBackgroundColor}
+                    >
+                         <Flex
+                              height={'0.75rem'}
+                              width={'0.75rem'}
+                              backgroundColor={user.ACTIVE ? colors.primaryColor : colors.deleteButtonBackgroundColor}
+                              justifyContent={"center"}
+                              alignItems={"center"}
+                              borderRadius={'50%'}
+                         />
+                    </Tooltip>
+               </Flex>
                <Flex
                     flex={1}
                     direction={'column'}

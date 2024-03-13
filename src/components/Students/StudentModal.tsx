@@ -6,6 +6,7 @@ import { Modal } from "../Modal";
 import { StudentsRequestType } from "../../types/students";
 import { axiosClient } from "../../services/axiosClient";
 import { useUtils } from "../../hooks/useUtils";
+import { useAuth } from "../../contexts/AuthContext";
 
 interface StudentModalProps {
      isOpen: boolean,
@@ -19,7 +20,8 @@ interface StudentModalProps {
 
 export function StudentModal({ isOpen, setIsOpen, isEditing, setIsEditing, isLoading, editingData, getAllStudents }: StudentModalProps) {
      const toast = useToast();
-
+     
+     const { user } = useAuth();
      const { inputsValidation } = useUtils();
 
      const [studentName, setStudentName] = useState<string>('');
@@ -104,12 +106,13 @@ export function StudentModal({ isOpen, setIsOpen, isEditing, setIsEditing, isLoa
      }
 
      async function handlePrimaryButtonClick() {
-          const data = {
+          const data: StudentsRequestType = {
                NAME: name.toLocaleUpperCase(),
                EMAIL: email.toLocaleLowerCase(),
                CELLPHONE: cellphone,
                IS_WPP_CELL: isWppCell,
                ACTIVE: isActive,
+               PERSONAL_TRAINER_ID: user.PERSONAL_TRAINER_ID
           }
 
           const validation = inputsValidation([

@@ -4,7 +4,7 @@ export interface UsersType {
      CELLPHONE: string,
      IS_WPP_CELL: boolean,
      ACTIVE: boolean,
-     PERSONAL_ID: number
+     PERSONAL_TRAINER_ID: number
 } 
 
 export interface UsersListType {

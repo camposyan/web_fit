@@ -1,15 +1,28 @@
-import { Flex, Box, Image } from "@chakra-ui/react"
+import { Flex, Box, Image, Text } from "@chakra-ui/react"
 import { SignOut } from "@phosphor-icons/react"
 import { colors } from "../constants/colors"
 import { MenuOptionsType } from "../types/menuOptions"
 import { MenuButton } from "./MenuButton"
 import logo from '../assets/logo.jpg'
+import { useAuth } from "../contexts/AuthContext"
 
 interface SidebarMenuProps {
      menuOptions: MenuOptionsType[]
 }
 
 export function SidebarMenu({ menuOptions }: SidebarMenuProps) {
+     const { user } = useAuth();
+
+     function formatName(): string {
+          const name = user.NAME.toLocaleLowerCase().split(' ')[0];
+          const lettersArray = name.split('');
+          const firstLetter = lettersArray[0]?.toUpperCase();
+          
+          lettersArray.shift();
+
+          return `${firstLetter}${lettersArray.join('')}`
+     }
+
      return (
           <Box
                width={'15rem'}
@@ -19,17 +32,25 @@ export function SidebarMenu({ menuOptions }: SidebarMenuProps) {
                display={{ base: 'none', lg: 'flex' }}
           >
                <Flex
-                    height={'7rem'}
+                    height={'8rem'}
+                    direction={"column"}
                     justifyContent={'center'}
                     alignItems={'center'}
-                    marginY={'1rem'}
+                    marginY={'2rem'}
+                    gap={"1rem"}
                >
                     <Image
                          src={logo}
                          alt='Azevedo'
-                         height={'100%'}
+                         height={'90%'}
                          borderRadius={'50%'}
                     />
+                    <Text
+                         color={colors.basicTextColor}
+                         fontSize={"1.2rem"}
+                    >
+                         Olá, {formatName()}
+                    </Text>
                </Flex>
                <Flex
                     height={'calc(100vh - 11rem)'}

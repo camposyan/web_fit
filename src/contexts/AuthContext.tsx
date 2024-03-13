@@ -9,15 +9,20 @@ interface AuthContextProps {
 
 interface AuthContextData {
      isLoggedIn: boolean
-     user: UserDataType | null
-     login(userName: string, userPassword: string, setIsLoading: Dispatch<SetStateAction<boolean>>): Promise<void>
+     user: UserDataType
+     login(
+          userName: string,
+          userPassword: string,
+          setIsLoading: Dispatch<SetStateAction<boolean>>
+     ): Promise<void>
 }
 
 interface UserDataType {
-     id: number,
-     email: string,
-     name: string,
-     token: string,
+     ID: number,
+     PERSONAL_TRAINER_ID: number,
+     EMAIL: string,
+     NAME: string,
+     TOKEN: string,
 }
 
 const AuthContext = createContext<AuthContextData>({} as AuthContextData);
@@ -28,7 +33,7 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
      const toast = useToast();
      const navigate = useNavigate();
 
-     const [user, setUser] = useState<UserDataType | null>(null);
+     const [user, setUser] = useState<UserDataType>({ ID: 0, PERSONAL_TRAINER_ID: 0, EMAIL: '', NAME: '', TOKEN: '', });
      const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
      async function login(
@@ -52,12 +57,13 @@ export const AuthProvider = ({ children }: AuthContextProps) => {
                               return config;
                          }
                     )
-
+                    
                     setUser({
-                         id: response.data.ID,
-                         name: response.data.NAME,
-                         email: response.data.EMAIL,
-                         token: response.data.TOKEN
+                         ID: response.data.ID,
+                         PERSONAL_TRAINER_ID: response.data.PERSONAL_TRAINER_ID,
+                         NAME: response.data.NAME,
+                         EMAIL: response.data.EMAIL,
+                         TOKEN: response.data.TOKEN
                     });
                     setIsLoggedIn(true);
 

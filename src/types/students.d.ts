@@ -5,6 +5,7 @@ export interface StudentsRequestType {
      CELLPHONE: string,
      IS_WPP_CELL: boolean,
      ACTIVE: boolean,
+     PERSONAL_TRAINER_ID: number,
 } 
 
 export interface StudentsType {
